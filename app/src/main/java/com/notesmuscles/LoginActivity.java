@@ -1,5 +1,6 @@
 package com.notesmuscles;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.DataInputStream;
@@ -15,65 +20,115 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import com.notesmuscles.NetworkProtocol.*;
+
 public class LoginActivity extends AppCompatActivity {
+
+    ActivityResultLauncher<Intent> activityResultLauncher =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult activityResult) {
+                            int result = activityResult.getResultCode();
+                            Intent data = activityResult.getData();
+                            Toast.makeText(LoginActivity.this, "LOGGED OUT", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
+
+    public static DataInputStream dataInputStream;
+    public static DataOutputStream dataOutputStream;
 
     private EditText usernameText, passwordText;
     private Button loginButton;
     private LoginActivity loginActivity;
+    final boolean[] buttonClicked = {false}; //accessing from an inner class hence effectively final
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         getSupportActionBar().hide();
-        loginActivity = this;
+        loginActivity = this; //needed to avoid inner class reference this
 
         usernameText = (EditText) findViewById(R.id.UsernameEditText);
         passwordText = (EditText) findViewById(R.id.PasswordEditText);
 
-        final boolean[] buttonClicked = {false}; //accessing from an inner class hence effectively final
+
         loginButton = (Button) findViewById(R.id.Loginbutton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!buttonClicked[0]){
                     String username = usernameText.getText().toString();
+                    username = username.trim();
                     String password = passwordText.getText().toString();
+                    password = password.trim();
                     new LoginToServer(loginActivity, username, password);
-                    Toast.makeText(LoginActivity.this, "LOGGING IN", Toast.LENGTH_LONG).show();
                     buttonClicked[0] = true;
-                }else{
-                    Toast.makeText(LoginActivity.this, "ALREADY LOGGING IN", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    public void launchUserMenu(){
+        setButtonToUnclicked();
+        Intent intent = new Intent(getApplicationContext(), UserMenuActivity.class);
+        intent.putExtra("username" ,getUserName());
+        activityResultLauncher.launch(intent);
+    }
+
+    public void setButtonToUnclicked(){
+        buttonClicked[0] = false;
+    }
+
+
+    public String getUserName(){
+        return usernameText.getText().toString().trim();
     }
 }
 
 class LoginToServer{
 
     private Socket socket;
-    private DataInputStream dataInputStream;
-    private DataOutputStream dataOutputStream;
-    private LoginActivity loginActivity;
+    private LoginActivity _loginActivity;
 
     final String serverIP = "139.179.197.194";
     final int NotesMusclePort = 4444;
 
-    public LoginToServer(LoginActivity loginActivity, String username, String password){
-        this.loginActivity = loginActivity;
+    public LoginToServer(LoginActivity _loginActivity, String username, String password){
+        this._loginActivity = _loginActivity;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
                     socket = new Socket(serverIP, NotesMusclePort);
-                    dataInputStream = new DataInputStream(socket.getInputStream());
-                    dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                    LoginActivity.dataInputStream = new DataInputStream(socket.getInputStream());
+                    LoginActivity.dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-                    String connectionConfirmation = dataInputStream.readUTF();
-                    Log.i("MESSAGE", connectionConfirmation);
-                    if(connectionConfirmation.equals("CONNECTED")){
-                        dataOutputStream.writeUTF("/LOGIN/" + username + "/"  + password + "/");
-                        dataOutputStream.flush();
+                    String connectionConfirmation = LoginActivity.dataInputStream.readUTF();
+                    //for successful connection debug only
+                    //Log.i("MESSAGE", connectionConfirmation);
+                    if(connectionConfirmation.equals(NetWorkProtocol.connectionEstablished)){
+                        String loginString = NetWorkProtocol.User_LogIn + NetWorkProtocol.dataDelimiter + username + NetWorkProtocol.dataDelimiter + password;
+                        LoginActivity.dataOutputStream.writeUTF( loginString);
+                        LoginActivity.dataOutputStream.flush();
+                    }
+                    //wait for server response
+                    String serverResponse = LoginActivity.dataInputStream.readUTF();
+
+                    //FOR DEBUG PURPOSES ONLY
+                    Log.i("SERVER RESPONSE: ", serverResponse);
+                    if(serverResponse.equals(NetWorkProtocol.SuccessFull_LOGIN)){
+                        _loginActivity.launchUserMenu();
+                    }else{
+                        _loginActivity.setButtonToUnclicked();
+                        _loginActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(_loginActivity.getApplicationContext(), "LOGIN FAILED", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }catch (UnknownHostException e) {
                     e.printStackTrace();

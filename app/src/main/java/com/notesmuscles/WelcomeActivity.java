@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
                         public void onActivityResult(ActivityResult activityResult) {
                             int result = activityResult.getResultCode();
                             Intent data = activityResult.getData();
-                            Toast.makeText(WelcomeActivity.this, "RETURNED", Toast.LENGTH_LONG).show();
+                            Toast.makeText(WelcomeActivity.this, "RETURN", Toast.LENGTH_SHORT).show();
                         }
                     }
             );
