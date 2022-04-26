@@ -76,16 +76,17 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="283dp"
-        android:layout_height="240dp"
-        android:background="@drawable/logo"
+        android:layout_width="1024px"
+        android:layout_height="1024px"
+        android:background="@drawable/logov4"
         android:foregroundGravity="center"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.694"
+        app:layout_constraintVertical_bias="0.75"
         tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
