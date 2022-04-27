@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.notesmuscles.CreateAccountActivity.RegisterUserInfoActivity;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     private Button loginButton, createAccountButton;
@@ -42,6 +44,14 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                activityResultLauncher.launch(intent);
+            }
+        });
+
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RegisterUserInfoActivity.class);
                 activityResultLauncher.launch(intent);
             }
         });

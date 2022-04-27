@@ -28,39 +28,6 @@ public class TiltSensor implements Runnable{
 
     private CameraActivity myCameraActivity;
 
-    public TiltSensor(CameraActivity myCameraActivity){
-        this.myCameraActivity = myCameraActivity;
-
-    }
-
-    //call these methods when in cameraActivity onResume/onPause
-    protected void onResume(){
-        sensorManager.registerListener(sensor_listener, acce_sensor, SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(sensor_listener, magnetic_sensor, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    protected void onPause(){
-        sensorManager.unregisterListener(sensor_listener);
-    }
-
-    private void updateOrientationAngles(){
-        SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerReading, magnetometerReading);
-        SensorManager.getOrientation(rotationMatrix, orientationAngles);
-    }
-
-    private boolean updateStatus(){
-        tiltValid = false;
-        if(!isCalibrated){
-            return tiltValid;
-        }
-        if(!((xValue > 7 && xValue < 11) && (yValue > -1 && yValue < 2) && (zValue > -1 && zValue < 1) && (orientationAngles[0]* 10 > (orientation_x - 2) && orientationAngles[0] * 10 < (orientation_x + 2)))){
-            tiltValid = false;
-        }else{
-            tiltValid = true;
-        }
-        return tiltValid;
-    }
-
     SensorEventListener sensor_listener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
@@ -80,6 +47,51 @@ public class TiltSensor implements Runnable{
         @Override
         public void onAccuracyChanged(Sensor sensor, int i) { }
     };
+
+    public TiltSensor(CameraActivity myCameraActivity){
+        this.myCameraActivity = myCameraActivity;
+        sensorManager.registerListener(sensor_listener, acce_sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensor_listener, magnetic_sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        isCalibrated = true;
+        sensorManager = (SensorManager)  myCameraActivity.getSystemService(Context.SENSOR_SERVICE);
+        acce_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetic_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+    }
+
+    //call these methods when in cameraActivity onResume/onPause
+    protected void onResume(){
+        sensorManager.registerListener(sensor_listener, acce_sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensor_listener, magnetic_sensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause(){
+        sensorManager.unregisterListener(sensor_listener);
+    }
+
+    private void recordingStartedCallback(){
+        SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerReading, magnetometerReading);
+        SensorManager.getOrientation(rotationMatrix, orientationAngles);
+        orientation_x = orientationAngles[0] * 10;
+
+    }
+
+    private void updateOrientationAngles(){
+        SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerReading, magnetometerReading);
+        SensorManager.getOrientation(rotationMatrix, orientationAngles);
+    }
+
+    private boolean updateStatus(){
+        tiltValid = false;
+        if(!isCalibrated){
+            return tiltValid;
+        }
+        if(!((xValue > 7 && xValue < 11) && (yValue > -1 && yValue < 2) && (zValue > -1 && zValue < 1) && (orientationAngles[0]* 10 > (orientation_x - 2) && orientationAngles[0] * 10 < (orientation_x + 2)))){
+            tiltValid = false;
+        }else{
+            tiltValid = true;
+        }
+        return tiltValid;
+    }
 
     @Override
     public void run(){

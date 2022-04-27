@@ -83,7 +83,7 @@ public class CameraActivity extends AppCompatActivity{
         getSupportActionBar().hide();
         setContentView(R.layout.camera_activity);
 
-        myTiltSensor = new TiltSensor(this);
+        //myTiltSensor = new TiltSensor(this);
         recordingStarted =false;
         returnButton = (Button) findViewById(R.id.returnButton);
         returnButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +105,7 @@ public class CameraActivity extends AppCompatActivity{
             public void onClick(View view) {
                 try {
                     recordingStarted = true;
-                    new Thread(myTiltSensor).start();
+                    //new Thread(myTiltSensor).start();
                     takePicture();
                 } catch (CameraAccessException e) {
                     e.printStackTrace();

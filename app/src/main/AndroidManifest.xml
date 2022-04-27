@@ -16,17 +16,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NotesMuscles">
         <activity
-            android:name=".WelcomeActivity"
-            android:exported="true">
+            android:name=".StartActivity"
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".WelcomeActivity"></activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".UserMenuActivity"></activity>
         <activity android:name=".RecordLecture.CameraActivity"></activity>
 
+        <activity
+            android:name=".CreateAccountActivity.RegisterUserInfoActivity"
+            android:noHistory="true"/>
+
+        <activity android:name=".PopActivity"
+            android:theme="@style/AppTheme.CustomTheme"
+            android:noHistory="true"/>
+
+        <activity android:name=".CreateAccountActivity.CancelPopActivity"
+            android:theme="@style/AppTheme.CustomTheme"
+            android:noHistory="true"/>
 
     </application>
 

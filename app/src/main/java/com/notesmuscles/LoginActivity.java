@@ -93,7 +93,7 @@ class LoginToServer{
     private Socket socket;
     private LoginActivity _loginActivity;
 
-    final String serverIP = "139.179.197.151";
+    final String serverIP = "139.179.197.159";
     final int NotesMusclePort = 4444;
 
     public LoginToServer(LoginActivity _loginActivity, String username, String password){

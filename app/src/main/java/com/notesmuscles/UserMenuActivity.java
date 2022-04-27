@@ -56,6 +56,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         requestExecution = new RequestExecution(this);
         readServerResponseThread = new Thread(this);
         readServerResponseThread.start();
+        setRecordButton();
     }
 
     private void setLogoutButton(){
@@ -83,6 +84,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "RECORDING" , Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
                 activityResultLauncher.launch(intent);
             }
