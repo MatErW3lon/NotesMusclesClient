@@ -7,6 +7,10 @@ package com.notesmuscles.NetworkProtocol;
  */
 
 public interface NetWorkProtocol {
+
+    String serverIP = "139.179.197.131";
+    int serverPort = 4444;
+
     String LOGIN_FAILED = "ERROR";
 
     String connectionEstablished = "CONNECTED";
@@ -20,5 +24,9 @@ public interface NetWorkProtocol {
     //example command to log in a user LOGIN/MatErW3lon/uglyday@14
 
     String SuccessFull_LOGIN = "SUCCESS";
+
+    String Image_Send = "IMAGE";
+    int Image_Received_Confirmation = 1;
+    String Image_Stop = "STOPIMAGE";
 }
 

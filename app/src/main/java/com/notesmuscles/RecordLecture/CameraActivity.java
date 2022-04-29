@@ -23,6 +23,7 @@ import android.media.ImageReader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.text.LoginFilter;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -34,15 +35,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.notesmuscles.LoginActivity;
+import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.R;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CameraActivity extends AppCompatActivity{
 
+    private final int Photo_Delay = 30000;
     private boolean recordingStarted;
     private Button captureButton, returnButton;
     private PhotoSend photoSendThread;
@@ -74,14 +80,71 @@ public class CameraActivity extends AppCompatActivity{
     private ImageReader imageReader;
     private Handler backgroundHandler;
     private HandlerThread backgroundHandlerThread;
+    //private Handler photoDelayHandler;
 
+    private final Runnable senderRunnable = new Runnable() {
+        @Override
+        public void run() {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    takePicture();
+                    Thread.sleep(30000);
+                    photoSendThread.send();
+                } catch (Exception exception) {
+                    //do nothing
+                }
+            }
+        }
+    };
 
+    /*private View.OnClickListener captureStopListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            photoDelayHandler.removeCallbacks(delayedPhotoSend);
+            captureButton.setText("RE START");
+            //note that we will be readings bytes at this point on the server
+            Thread stopperThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if(photoSendThread != null){
+                        photoSendThread.interrupt();
+                    }
+                    try {
+                        LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.Image_Stop);
+                        LoginActivity.dataOutputStream.flush();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                    recordingStarted = false;
+                    captureButton.setOnClickListener(captureStartListener);
+                }
+            });
+            stopperThread.start();
+        }
+    };*/
+
+    private View.OnClickListener captureStartListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+                /*photoSendThread = new PhotoSend();
+                recordingStarted = true;
+                captureButton.setText("STOP");
+                captureButton.setOnClickListener(captureStopListener);
+                //new Thread(myTiltSensor).start();
+                delayedPhotoSend.run();*/
+                photoSendThread = new PhotoSend();
+                Thread senderThread = new Thread(senderRunnable);
+                senderThread.start();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.camera_activity);
+
+        //photoDelayHandler = new Handler();
 
         //myTiltSensor = new TiltSensor(this);
         recordingStarted =false;
@@ -92,7 +155,7 @@ public class CameraActivity extends AppCompatActivity{
                 if(!recordingStarted){
                     finish();
                 }else{
-                    //promote error popup
+                    Toast.makeText(getApplicationContext(), "STOP RECORDING BEFORE EXIT", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -100,19 +163,9 @@ public class CameraActivity extends AppCompatActivity{
         cameraView = (TextureView)  findViewById(R.id.cameraTextureView);
         cameraView.setSurfaceTextureListener(textureListener); //sets the textureview to the texturelistener...sets the SurfaceTextureListener used to listen to surface texture events
         captureButton = (Button) findViewById(R.id.captureButton);
-        captureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    recordingStarted = true;
-                    //new Thread(myTiltSensor).start();
-                    takePicture();
-                } catch (CameraAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        captureButton.setOnClickListener(captureStartListener);
     }
+
     //this function is a callback for the result from requesting permissions
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -281,6 +334,7 @@ public class CameraActivity extends AppCompatActivity{
     }
 
     private void takePicture() throws CameraAccessException {
+        Log.i("TAKE PICTURE", "HERE");
         if(cameraDevice == null){
             return;
         }
@@ -318,10 +372,8 @@ public class CameraActivity extends AppCompatActivity{
                 byte[] bytes = new byte[buffer.capacity()];
                 buffer.get(bytes);
                 if(photoSendThread != null){
+                    //Toast.makeText(getApplicationContext(), "SENDING", Toast.LENGTH_SHORT).show();
                     photoSendThread.setByteArray(bytes);
-                    Thread sender = new Thread(photoSendThread);
-                    sender.setPriority(Thread.MAX_PRIORITY);
-                    sender.start();
                 }
             }
         };
@@ -332,7 +384,7 @@ public class CameraActivity extends AppCompatActivity{
             @Override
             public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                 super.onCaptureCompleted(session, request, result);
-                Toast.makeText(getApplicationContext(), "Captured", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Captured", Toast.LENGTH_LONG).show();
                 try {
                     createCameraPreview();
                 } catch (CameraAccessException e) {

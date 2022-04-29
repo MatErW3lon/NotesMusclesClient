@@ -47,7 +47,6 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "NEXT ACTIVITY TO BE IMPLEMENTED", Toast.LENGTH_LONG).show();
                 //launch next slide
                 //validate inputs
                 String firstName = firstnameEditText.getText().toString().trim();
@@ -55,7 +54,18 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
                 String bilkentID = bilkentIDEditText.getText().toString().trim();
 
                 setInfoBuffer(firstName,lastName,bilkentID);
-                InputValidation.validateUserInfo();
+
+                if(!InputValidation.validateUserInfo(RegisterUserInfoActivity.this)){
+                    firstnameEditText.setText("RE-ENTER FIRSTNAME");
+                    lastnameEditText.setText("RE_ENTER LASTNAME");
+                    bilkentIDEditText.setText("RE_ENTER BILKENTID");
+                }else{
+                    //Toast.makeText(getApplicationContext(), "NEXT ACTIVITY TO BE IMPLEMENTED", Toast.LENGTH_SHORT).show();
+                    //launch new activity
+                    Intent intent = new Intent(getApplicationContext(), CreateTimeTableActivity.class);
+                    intent.putExtra("first_name", firstName);
+                    activityResultLauncher.launch(intent);
+                }
             }
         });
 

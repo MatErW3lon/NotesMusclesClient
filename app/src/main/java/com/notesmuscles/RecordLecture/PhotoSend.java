@@ -1,23 +1,15 @@
 package com.notesmuscles.RecordLecture;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.util.Base64;
-import android.util.Log;
-import android.widget.ImageView;
-
 import com.notesmuscles.LoginActivity;
+import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
-import java.util.ArrayList;
 
 
-public class PhotoSend implements Runnable{
+
+public class PhotoSend{
 
     private byte[] imageData;
     private DataOutputStream os;
@@ -28,21 +20,21 @@ public class PhotoSend implements Runnable{
         is = LoginActivity.dataInputStream;
     }
 
-    public void run(){
+    public void send(){
         int imageDataLength = this.imageData.length;
         try {
-            os.writeInt(imageDataLength);
+            os.writeUTF(NetWorkProtocol.Image_Send + NetWorkProtocol.dataDelimiter + imageDataLength);
             os.flush();
             //block the photo sending until confirmation
-            int confirmation = is.readInt();
-            if(confirmation != 1){
-                throw new IOException();
-            }else{
+            //int confirmation = is.readInt();
+            //if(confirmation != NetWorkProtocol.Image_Received_Confirmation){
+                //throw new IOException();
+            //}else{
                 //start sending the bytes after a sleep
-                Thread.sleep(10);
-                os.write(imageData, 0, imageDataLength);
-                os.flush();
-            }
+            Thread.sleep(500);
+            os.write(imageData, 0, imageDataLength);
+            os.flush();
+            //}
         } catch (IOException ioException) {
             ioException.printStackTrace();
             closeEveryThing( os, is);
@@ -53,7 +45,6 @@ public class PhotoSend implements Runnable{
     }
 
     public void setByteArray(byte[] bytes){
-
         imageData = bytes;
     }
 

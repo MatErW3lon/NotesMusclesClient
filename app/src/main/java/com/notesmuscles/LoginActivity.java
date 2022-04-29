@@ -1,5 +1,8 @@
 package com.notesmuscles;
 
+import static com.notesmuscles.NetworkProtocol.NetWorkProtocol.serverIP;
+import static com.notesmuscles.NetworkProtocol.NetWorkProtocol.serverPort;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -93,8 +96,7 @@ class LoginToServer{
     private Socket socket;
     private LoginActivity _loginActivity;
 
-    final String serverIP = "139.179.197.159";
-    final int NotesMusclePort = 4444;
+
 
     public LoginToServer(LoginActivity _loginActivity, String username, String password){
         this._loginActivity = _loginActivity;
@@ -102,7 +104,7 @@ class LoginToServer{
             @Override
             public void run() {
                 try{
-                    socket = new Socket(serverIP, NotesMusclePort);
+                    socket = new Socket(serverIP, serverPort);
                     LoginActivity.dataInputStream = new DataInputStream(socket.getInputStream());
                     LoginActivity.dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
@@ -130,10 +132,14 @@ class LoginToServer{
                             }
                         });
                     }
-                }catch (UnknownHostException e) {
+                }catch (Exception e){
+                    _loginActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(_loginActivity.getApplicationContext(), "SERVER NOT RESPONDING", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     e.printStackTrace();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
                 }
             }}).start();
     }

@@ -24,18 +24,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity"></activity>
+
+        <activity android:name=".WelcomeActivity"
+            android:launchMode="singleTask">
+
+        </activity>
         <activity android:name=".LoginActivity"></activity>
+
         <activity android:name=".UserMenuActivity"></activity>
+
         <activity android:name=".RecordLecture.CameraActivity"></activity>
 
         <activity
             android:name=".CreateAccountActivity.RegisterUserInfoActivity"
             android:noHistory="true"/>
 
-        <activity android:name=".PopActivity"
-            android:theme="@style/AppTheme.CustomTheme"
-            android:noHistory="true"/>
+        <activity android:name=".CreateAccountActivity.CreateTimeTableActivity"
+            android:noHistory="true"></activity>
 
         <activity android:name=".CreateAccountActivity.CancelPopActivity"
             android:theme="@style/AppTheme.CustomTheme"
