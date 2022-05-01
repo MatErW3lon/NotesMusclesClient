@@ -13,8 +13,6 @@ public interface NetWorkProtocol {
 
     String LOGIN_FAILED = "ERROR";
 
-    String connectionEstablished = "CONNECTED";
-
     String dataDelimiter = "/";
 
     String User_LogOut = "LOGOUT";
@@ -26,7 +24,13 @@ public interface NetWorkProtocol {
     String SuccessFull_LOGIN = "SUCCESS";
 
     String Image_Send = "IMAGE";
-    int Image_Received_Confirmation = 1;
+    Integer Image_Received_Confirmation = 1;
     String Image_Stop = "STOPIMAGE";
+
+    //create account commands
+    String Create_Account_Request = "CREATEACCOUNT";
+    String ACCOUNT_EXISTS_ERROR = "-1";
+    String ACCOUNT_CONTINUE = "1";
+    //after sending the request the account info will be sent as a byte
 }
 

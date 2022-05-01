@@ -96,8 +96,6 @@ class LoginToServer{
     private Socket socket;
     private LoginActivity _loginActivity;
 
-
-
     public LoginToServer(LoginActivity _loginActivity, String username, String password){
         this._loginActivity = _loginActivity;
         new Thread(new Runnable() {
@@ -108,14 +106,11 @@ class LoginToServer{
                     LoginActivity.dataInputStream = new DataInputStream(socket.getInputStream());
                     LoginActivity.dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-                    String connectionConfirmation = LoginActivity.dataInputStream.readUTF();
                     //for successful connection debug only
                     //Log.i("MESSAGE", connectionConfirmation);
-                    if(connectionConfirmation.equals(NetWorkProtocol.connectionEstablished)){
-                        String loginString = NetWorkProtocol.User_LogIn + NetWorkProtocol.dataDelimiter + username + NetWorkProtocol.dataDelimiter + password;
-                        LoginActivity.dataOutputStream.writeUTF( loginString);
-                        LoginActivity.dataOutputStream.flush();
-                    }
+                    String loginString = NetWorkProtocol.User_LogIn + NetWorkProtocol.dataDelimiter + username + NetWorkProtocol.dataDelimiter + password;
+                    LoginActivity.dataOutputStream.writeUTF( loginString);
+                    LoginActivity.dataOutputStream.flush();
                     //wait for server response
                     String serverResponse = LoginActivity.dataInputStream.readUTF();
 

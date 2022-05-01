@@ -62,8 +62,48 @@ class InputValidation {
         return true;
     }
 
+    static boolean validateCoursesInfo(AppCompatActivity TimetableInfoActivity){
+        pattern = Pattern.compile("[A-Z]+-[0-9]+-[0-9]+");
+        String[] courses = {AccountInfoBuffer.course1, AccountInfoBuffer.course2, AccountInfoBuffer.course3, AccountInfoBuffer.course4, AccountInfoBuffer.course5};
+        for(int i = 0; i < courses.length; i++){
+            matcher = pattern.matcher(courses[i]);
+            if(!matcher.find()){
+                if(courses[i].equals("NONE")){
+                    continue;
+                }
+                int finalI = i;
+                TimetableInfoActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String buildWarningStr = courses[finalI] + " IS NOT A VALID INPUT";
+                        Toast.makeText(TimetableInfoActivity.getApplicationContext(), buildWarningStr, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
+        }
+        return true;
+    }
 
-
+    static boolean validateUserNamePassword(AppCompatActivity UsernamePasswordActivity){
+        pattern = Pattern.compile("[A-Z]+", Pattern.CASE_INSENSITIVE);
+        String[] info = {AccountInfoBuffer.username, AccountInfoBuffer.password};
+        for(int i =0; i < info.length; i++){
+            matcher = pattern.matcher(info[i]);
+            if(!matcher.find()){
+                int finalI = i;
+                UsernamePasswordActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String buildWarningStr = info[finalI] + " IS NOT A VALID INPUT";
+                        Toast.makeText(UsernamePasswordActivity.getApplicationContext(), buildWarningStr, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 

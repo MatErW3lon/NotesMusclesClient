@@ -37,14 +37,17 @@
 
         <activity
             android:name=".CreateAccountActivity.RegisterUserInfoActivity"
-            android:noHistory="true"/>
+            android:noHistory="true"></activity>
 
         <activity android:name=".CreateAccountActivity.CreateTimeTableActivity"
             android:noHistory="true"></activity>
 
+        <activity android:name=".CreateAccountActivity.UserNamePasswordActivity"
+            android:noHistory="true"></activity>
+
         <activity android:name=".CreateAccountActivity.CancelPopActivity"
             android:theme="@style/AppTheme.CustomTheme"
-            android:noHistory="true"/>
+            android:noHistory="true"></activity>
 
     </application>
 

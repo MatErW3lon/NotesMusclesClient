@@ -1,7 +1,10 @@
 package com.notesmuscles.CreateAccountActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +18,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.notesmuscles.R;
 
+import java.io.IOException;
+
 public class RegisterUserInfoActivity extends AppCompatActivity {
 
     private EditText firstnameEditText, lastnameEditText, bilkentIDEditText;
     private Button returnButton, nextButton;
+    public static ServerConnection serverConnection;
+    static{
+        serverConnection = new ServerConnection();
+    }
+
 
     ActivityResultLauncher<Intent> activityResultLauncher =
             registerForActivityResult(
@@ -56,15 +66,19 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
                 setInfoBuffer(firstName,lastName,bilkentID);
 
                 if(!InputValidation.validateUserInfo(RegisterUserInfoActivity.this)){
-                    firstnameEditText.setText("RE-ENTER FIRSTNAME");
-                    lastnameEditText.setText("RE_ENTER LASTNAME");
-                    bilkentIDEditText.setText("RE_ENTER BILKENTID");
+                    firstnameEditText.setText("FIRST NAME");
+                    lastnameEditText.setText("LAST NAME");
+                    bilkentIDEditText.setText("BILKENT ID");
                 }else{
-                    //Toast.makeText(getApplicationContext(), "NEXT ACTIVITY TO BE IMPLEMENTED", Toast.LENGTH_SHORT).show();
-                    //launch new activity
-                    Intent intent = new Intent(getApplicationContext(), CreateTimeTableActivity.class);
-                    intent.putExtra("first_name", firstName);
-                    activityResultLauncher.launch(intent);
+                    if(serverConnection.checkBilkentIDUniqueness(bilkentID)){
+                        //check for launch activity
+                        Log.i("RESPONSE", "ready to launch activity");
+                        Intent intent = new Intent(getApplicationContext(), CreateTimeTableActivity.class);
+                        intent.putExtra("first_name", firstName);
+                        activityResultLauncher.launch(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "BILKENT ID ALREADY EXISTS", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -75,7 +89,6 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         firstnameEditText = (EditText) findViewById(R.id.firstnameEditText);
         lastnameEditText = (EditText) findViewById(R.id.lastnameEditText);
         bilkentIDEditText = (EditText) findViewById(R.id.bilkentIDEditText);
-
         returnButton = (Button) findViewById(R.id.returnToWelcomeButton);
         nextButton = (Button) findViewById(R.id.nextInfobutton);
     }
