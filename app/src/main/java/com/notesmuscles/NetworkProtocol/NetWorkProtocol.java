@@ -8,7 +8,7 @@ package com.notesmuscles.NetworkProtocol;
 
 public interface NetWorkProtocol {
 
-    String serverIP = "139.179.197.131";
+    String serverIP = "139.179.197.178";
     int serverPort = 4444;
 
     String LOGIN_FAILED = "ERROR";
@@ -31,6 +31,8 @@ public interface NetWorkProtocol {
     String Create_Account_Request = "CREATEACCOUNT";
     String ACCOUNT_EXISTS_ERROR = "-1";
     String ACCOUNT_CONTINUE = "1";
+    String Cancel_Acc_Request = "CANCEL_NEW_ACC";
+    String Acc_Info_Ready = "READY_TO_CREATE";
     //after sending the request the account info will be sent as a byte
 }
 

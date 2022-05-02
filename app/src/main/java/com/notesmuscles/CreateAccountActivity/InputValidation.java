@@ -63,12 +63,12 @@ class InputValidation {
     }
 
     static boolean validateCoursesInfo(AppCompatActivity TimetableInfoActivity){
-        pattern = Pattern.compile("[A-Z]+-[0-9]+-[0-9]+");
+        pattern = Pattern.compile("[A-Z]+-[0-9]+-[0-9]+", Pattern.CASE_INSENSITIVE);
         String[] courses = {AccountInfoBuffer.course1, AccountInfoBuffer.course2, AccountInfoBuffer.course3, AccountInfoBuffer.course4, AccountInfoBuffer.course5};
         for(int i = 0; i < courses.length; i++){
             matcher = pattern.matcher(courses[i]);
             if(!matcher.find()){
-                if(courses[i].equals("NONE")){
+                if(courses[i].equalsIgnoreCase("NONE")){
                     continue;
                 }
                 int finalI = i;

@@ -25,10 +25,6 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
     private EditText firstnameEditText, lastnameEditText, bilkentIDEditText;
     private Button returnButton, nextButton;
     public static ServerConnection serverConnection;
-    static{
-        serverConnection = new ServerConnection();
-    }
-
 
     ActivityResultLauncher<Intent> activityResultLauncher =
             registerForActivityResult(
@@ -45,6 +41,7 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
         setContentView(R.layout.register_user_info);
         getSupportActionBar().hide();
 
+        serverConnection = new ServerConnection();
         getViews();
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override

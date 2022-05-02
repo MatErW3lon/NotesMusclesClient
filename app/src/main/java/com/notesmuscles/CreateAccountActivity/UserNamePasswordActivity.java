@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.notesmuscles.R;
+import com.notesmuscles.WelcomeActivity;
 
 public class UserNamePasswordActivity extends AppCompatActivity {
 
@@ -36,7 +37,6 @@ public class UserNamePasswordActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         getViews();
-
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +56,9 @@ public class UserNamePasswordActivity extends AppCompatActivity {
                     usernameEditText.setText("USERNAME");
                     passwordEditText.setText("PASSWORD");
                 }else{
-                    Toast.makeText(getApplicationContext(), "TO BE IMPLEMENTED", Toast.LENGTH_SHORT).show();
+                    RegisterUserInfoActivity.serverConnection.start();
+                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                    activityResultLauncher.launch(intent);
                 }
             }
         });

@@ -57,13 +57,13 @@ public class CancelPopActivity extends AppCompatActivity {
         warningMessage = (TextView) findViewById(R.id.CreateAccPopText);
         warningMessage.setText(Html.fromHtml(warning, Html.FROM_HTML_MODE_COMPACT));
 
-
         confirmButton = (Button) findViewById(R.id.confirm_button);
         cancelButton = (Button) findViewById(R.id.cancel_button);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                RegisterUserInfoActivity.serverConnection.CancelAccountCreation();
                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 activityResultLauncher.launch(intent);
             }
