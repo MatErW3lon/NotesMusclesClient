@@ -61,17 +61,23 @@ class ServerConnection extends Thread{
         }catch(IOException ioException){}
     }
 
+
+    //the info string is of the following form
+    /*
+        firstname/lastname/bilkentid/dayID/lec1/lec2/lec3/lec4/dayID/lec1/lec2/lec3/lec4/dayID/lec1/lec2/lec3/lec4/dayID/lec1/lec2/lec3/lec4/dayID/lec1/lec2/lec3/lec4/username/password
+     */
+
     private String buildAccountInfo() {
         String returnString = AccountInfoBuffer.FirstName + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.LastName + NetWorkProtocol.dataDelimiter
-                + AccountInfoBuffer.BilkentID + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.course1 + NetWorkProtocol.dataDelimiter +
-                AccountInfoBuffer.course2 + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.course3 + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.course4 +
-                NetWorkProtocol.dataDelimiter + AccountInfoBuffer.course5 + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.username + NetWorkProtocol.dataDelimiter
-                + AccountInfoBuffer.password;
+                + AccountInfoBuffer.BilkentID + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.Monday.getStringRep() + NetWorkProtocol.dataDelimiter +
+                AccountInfoBuffer.Tuesday.getStringRep() + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.Wednesday.getStringRep() + NetWorkProtocol.dataDelimiter +
+                AccountInfoBuffer.Thursday.getStringRep() + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.Friday.getStringRep() + NetWorkProtocol.dataDelimiter +
+                AccountInfoBuffer.username + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.password;
         return returnString;
-    }
 
+    }
     public boolean checkBilkentIDUniqueness(String bilkentID){
-        Log.i("RESPONSE", bilkentID);
+        //Log.i("RESPONSE", bilkentID);
         final boolean[] returnValue = {true};
         Thread requestForUniquenessThread =  new Thread(new Runnable() {
             @Override

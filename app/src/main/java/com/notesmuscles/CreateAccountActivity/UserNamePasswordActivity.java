@@ -18,7 +18,7 @@ import com.notesmuscles.WelcomeActivity;
 
 public class UserNamePasswordActivity extends AppCompatActivity {
 
-    private EditText usernameEditText, passwordEditText;
+    private EditText usernameEditText, passwordEditText, confirmPasswordEditText;
     private Button returnButton, createAccountButton;
 
     ActivityResultLauncher<Intent> activityResultLauncher =
@@ -50,11 +50,13 @@ public class UserNamePasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = usernameEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
-                setInfoBuffer(username, password);
+                String confirmPassword = confirmPasswordEditText.getText().toString().trim();
+                setInfoBuffer(username, password, confirmPassword);
 
                 if(!InputValidation.validateUserNamePassword(UserNamePasswordActivity.this)){
-                    usernameEditText.setText("USERNAME");
-                    passwordEditText.setText("PASSWORD");
+                    usernameEditText.setText("");
+                    passwordEditText.setText("");
+                    confirmPasswordEditText.setText("");
                 }else{
                     RegisterUserInfoActivity.serverConnection.start();
                     Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
@@ -64,14 +66,16 @@ public class UserNamePasswordActivity extends AppCompatActivity {
         });
     }
 
-    private void setInfoBuffer(String username, String password) {
+    private void setInfoBuffer(String username, String password,String confirmPassword) {
         AccountInfoBuffer.username = username;
         AccountInfoBuffer.password = password;
+        AccountInfoBuffer.confirmPassword = confirmPassword;
     }
 
     private void getViews(){
         usernameEditText = (EditText) findViewById(R.id.UsernameEditText);
         passwordEditText = (EditText) findViewById(R.id.PasswordEditText);
+        confirmPasswordEditText = (EditText) findViewById(R.id.ConfirmPasswordEditText);
         returnButton = (Button) findViewById(R.id.returnToWelcomeButton);
         createAccountButton = (Button) findViewById(R.id.finalizeInfobutton);
     }

@@ -62,9 +62,9 @@ class InputValidation {
         return true;
     }
 
-    static boolean validateCoursesInfo(AppCompatActivity TimetableInfoActivity){
+    static boolean validateCoursesInfo(AppCompatActivity TimetableInfoActivity, String[] courses){
         pattern = Pattern.compile("[A-Z]+-[0-9]+-[0-9]+", Pattern.CASE_INSENSITIVE);
-        String[] courses = {AccountInfoBuffer.course1, AccountInfoBuffer.course2, AccountInfoBuffer.course3, AccountInfoBuffer.course4, AccountInfoBuffer.course5};
+
         for(int i = 0; i < courses.length; i++){
             matcher = pattern.matcher(courses[i]);
             if(!matcher.find()){
@@ -87,7 +87,10 @@ class InputValidation {
 
     static boolean validateUserNamePassword(AppCompatActivity UsernamePasswordActivity){
         pattern = Pattern.compile("[A-Z]+", Pattern.CASE_INSENSITIVE);
-        String[] info = {AccountInfoBuffer.username, AccountInfoBuffer.password};
+        String[] info = {AccountInfoBuffer.username, AccountInfoBuffer.password, AccountInfoBuffer.confirmPassword};
+        if(!info[2].equals(info[1])){
+            return false;
+        }
         for(int i =0; i < info.length; i++){
             matcher = pattern.matcher(info[i]);
             if(!matcher.find()){

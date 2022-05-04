@@ -63,13 +63,13 @@ public class RegisterUserInfoActivity extends AppCompatActivity {
                 setInfoBuffer(firstName,lastName,bilkentID);
 
                 if(!InputValidation.validateUserInfo(RegisterUserInfoActivity.this)){
-                    firstnameEditText.setText("FIRST NAME");
-                    lastnameEditText.setText("LAST NAME");
-                    bilkentIDEditText.setText("BILKENT ID");
+                    firstnameEditText.setText("");
+                    lastnameEditText.setText("");
+                    bilkentIDEditText.setText("");
+
                 }else{
                     if(serverConnection.checkBilkentIDUniqueness(bilkentID)){
                         //check for launch activity
-                        Log.i("RESPONSE", "ready to launch activity");
                         Intent intent = new Intent(getApplicationContext(), CreateTimeTableActivity.class);
                         intent.putExtra("first_name", firstName);
                         activityResultLauncher.launch(intent);

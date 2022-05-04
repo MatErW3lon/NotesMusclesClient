@@ -44,10 +44,12 @@
             android:noHistory="true"></activity>
 
         <activity android:name=".CreateAccountActivity.UserNamePasswordActivity"
+            android:launchMode="singleTask"
             android:noHistory="true"></activity>
 
         <activity android:name=".CreateAccountActivity.CancelPopActivity"
             android:theme="@style/AppTheme.CustomTheme"
+            android:launchMode="singleTask"
             android:noHistory="true"></activity>
 
     </application>

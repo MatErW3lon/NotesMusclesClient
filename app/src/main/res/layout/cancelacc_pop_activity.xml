@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#776a0dad"
-    tools:context=".PopActivity">
+    tools:context=".CreateAccountActivity.CancelPopActivity">
 s
     <TextView
         android:id="@+id/CreateAccPopText"

@@ -25,10 +25,10 @@ public interface NetWorkProtocol {
 
     String Image_Send = "IMAGE";
     Integer Image_Received_Confirmation = 1;
-    String Image_Stop = "STOPIMAGE";
+    String Image_Stop = "STOP_IMAGE";
 
     //create account commands
-    String Create_Account_Request = "CREATEACCOUNT";
+    String Create_Account_Request = "CREATE_ACCOUNT";
     String ACCOUNT_EXISTS_ERROR = "-1";
     String ACCOUNT_CONTINUE = "1";
     String Cancel_Acc_Request = "CANCEL_NEW_ACC";

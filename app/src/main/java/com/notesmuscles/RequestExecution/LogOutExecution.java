@@ -9,11 +9,11 @@ import com.notesmuscles.UserMenuActivity;
 import java.io.IOException;
 
 
-public class RequestExecution {
+public class LogOutExecution {
 
     private UserMenuActivity myUser;
 
-    public RequestExecution(UserMenuActivity userMenuActivity){
+    public LogOutExecution(UserMenuActivity userMenuActivity){
         myUser = userMenuActivity;
     }
 
@@ -30,5 +30,4 @@ public class RequestExecution {
             LoginActivity.dataInputStream = null;
         }
     }
-
 }

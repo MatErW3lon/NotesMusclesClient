@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.RecordLecture.CameraActivity;
-import com.notesmuscles.RequestExecution.RequestExecution;
+import com.notesmuscles.RequestExecution.LogOutExecution;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
     private String username;
     private TextView welcomeUserTextView;
     private Button logoutButton, recordButton;
-    private RequestExecution requestExecution;
+    private LogOutExecution requestExecution;
     private Thread readServerResponseThread;
 
     ActivityResultLauncher<Intent> activityResultLauncher =
@@ -53,7 +53,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         username = intent.getStringExtra("username");
         welcomeUserTextView.setText("WELCOME, " + username);
         setLogoutButton();
-        requestExecution = new RequestExecution(this);
+        requestExecution = new LogOutExecution(this);
         readServerResponseThread = new Thread(this);
         readServerResponseThread.start();
         setRecordButton();
