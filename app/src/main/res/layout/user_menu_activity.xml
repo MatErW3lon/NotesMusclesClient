@@ -30,11 +30,11 @@
         android:layout_height="77dp"
         android:layout_marginTop="108dp"
         android:background="#ffffff"
-        android:fontFamily="@font/mistral"
+        android:fontFamily="@font/montserrat"
         android:gravity="center"
         android:text="placeholder for username"
         android:textColor="#000000"
-        android:textSize="100px"
+        android:textSize="80px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -75,6 +75,22 @@
         app:layout_constraintVertical_bias="0.399" />
 
     <Button
+        android:id="@+id/Timetablebutton"
+        android:layout_width="260dp"
+        android:layout_height="47dp"
+        android:background="@drawable/roundedbutton"
+        android:fontFamily="@font/mistralorg"
+        android:gravity="center"
+        android:text="Timetable"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.514" />
+
+    <Button
         android:id="@+id/Profilebutton"
         android:layout_width="260dp"
         android:layout_height="47dp"
@@ -88,7 +104,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.513" />
+        app:layout_constraintVertical_bias="0.63" />
 
     <Button
         android:id="@+id/Logoutbutton"

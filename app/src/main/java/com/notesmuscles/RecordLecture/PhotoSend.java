@@ -7,8 +7,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-
-
 public class PhotoSend{
 
     private byte[] imageData;
@@ -25,12 +23,6 @@ public class PhotoSend{
         try {
             os.writeUTF(NetWorkProtocol.Image_Send + NetWorkProtocol.dataDelimiter + imageDataLength);
             os.flush();
-            //block the photo sending until confirmation
-            //int confirmation = is.readInt();
-            //if(confirmation != NetWorkProtocol.Image_Received_Confirmation){
-                //throw new IOException();
-            //}else{
-                //start sending the bytes after a sleep
             Thread.sleep(500);
             os.write(imageData, 0, imageDataLength);
             os.flush();

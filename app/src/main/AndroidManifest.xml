@@ -52,6 +52,10 @@
             android:launchMode="singleTask"
             android:noHistory="true"></activity>
 
+        <activity android:name=".ProfileActivity.ProfileViewActivity"/>
+
+        <activity android:name=".TimeTable.TimeTableViewActivity"/>
+
     </application>
 
 </manifest>

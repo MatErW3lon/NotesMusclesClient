@@ -18,6 +18,7 @@ import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.ProfileActivity.ProfileViewActivity;
 import com.notesmuscles.RecordLecture.CameraActivity;
 import com.notesmuscles.RequestExecution.LogOutExecution;
+import com.notesmuscles.TimeTable.TimeTableViewActivity;
 
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
 
     private String username;
     private TextView welcomeUserTextView;
-    private Button logoutButton, recordButton, profileButton;
+    private Button logoutButton, recordButton, profileButton, timetableButton;
     private LogOutExecution requestExecution;
     private Thread readServerResponseThread;
     private String firstname, lastname, bilkentID;
@@ -64,6 +65,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         readServerResponseThread.start();
         setRecordButton();
         setProfileButton();
+        setTimetableButton();
     }
 
     private void setLogoutButton(){
@@ -111,6 +113,18 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
             }
         });
     }
+
+    private void setTimetableButton(){
+        timetableButton = (Button) findViewById(R.id.Timetablebutton);
+        timetableButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TimeTableViewActivity.class);
+                activityResultLauncher.launch(intent);
+            }
+        });
+    }
+
 
     public String getFirstname(){
         return firstname;
