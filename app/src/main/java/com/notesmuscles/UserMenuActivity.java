@@ -2,6 +2,8 @@ package com.notesmuscles;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,19 +19,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.ProfileActivity.ProfileViewActivity;
 import com.notesmuscles.RecordLecture.CameraActivity;
-import com.notesmuscles.RequestExecution.LogOutExecution;
+import com.notesmuscles.RecordLecture.NoLecturePopActivity;
 import com.notesmuscles.TimeTable.TimeTableViewActivity;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
-public class UserMenuActivity extends AppCompatActivity implements Runnable {
+public class UserMenuActivity extends AppCompatActivity{
 
     private String username;
-    private TextView welcomeUserTextView;
+    private TextView welcomeUserTextView, data_time_textview;
     private Button logoutButton, recordButton, profileButton, timetableButton;
-    private LogOutExecution requestExecution;
-    private Thread readServerResponseThread;
     private String firstname, lastname, bilkentID;
+    public static String timetable;
+    private Date currentTime;
+    private Handler handler;
+    private Runnable alterDateRunnable = new Runnable() {
+        @Override
+        public void run() {
+            alterDateTextView();
+            handler.postDelayed(alterDateRunnable, 1000);
+        }
+    };
 
     ActivityResultLauncher<Intent> activityResultLauncher =
             registerForActivityResult(
@@ -37,9 +49,8 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
                     new ActivityResultCallback<ActivityResult>() {
                         @Override
                         public void onActivityResult(ActivityResult activityResult) {
-                            int result = activityResult.getResultCode();
-                            Intent data = activityResult.getData();
-                            Toast.makeText(getApplicationContext(), "RETURNED TO MENU", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(getApplicationContext(), "MENU", Toast.LENGTH_SHORT).show();
                         }
                     }
             );
@@ -49,6 +60,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_menu_activity);
         getSupportActionBar().hide();
+        UserMenuActivity.timetable = null;
 
         welcomeUserTextView = (TextView) findViewById(R.id.UserWelcomeTextView);
         //display username
@@ -57,15 +69,15 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         firstname = intent.getStringExtra("firstname");
         lastname = intent.getStringExtra("lastname");
         bilkentID = intent.getStringExtra("bilkentID");
-
+        data_time_textview = (TextView) findViewById(R.id.DateTimeTextView);
         welcomeUserTextView.setText("WELCOME, " + username);
+        alterDateTextView();
         setLogoutButton();
-        requestExecution = new LogOutExecution(this);
-        readServerResponseThread = new Thread(this);
-        readServerResponseThread.start();
         setRecordButton();
         setProfileButton();
         setTimetableButton();
+        handler = new Handler();
+        alterDateRunnable.run();
     }
 
     private void setLogoutButton(){
@@ -79,6 +91,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
                         try {
                             LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.User_LogOut);
                             LoginActivity.dataOutputStream.flush();
+                            finish();
                         } catch (IOException ioException) {
                             Log.i("IO EXCEPTION", ioException.toString());
                         }
@@ -93,9 +106,22 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "RECORDING" , Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-                activityResultLauncher.launch(intent);
+                boolean[] dateAndTimeCheck = validateLectureRecordingTime();
+                Log.i("DEBUG", "CHECKED DATE AND TIME VALIDATION");
+                Intent intent;
+                if(dateAndTimeCheck[2]){
+                    intent = new Intent(getApplicationContext(), NoLecturePopActivity.class);
+                    intent.putExtra("message", "It is a weekend today. Are you sure you have a lecture today?");
+                    activityResultLauncher.launch(intent);
+                }else if(dateAndTimeCheck[1]){
+                    intent = new Intent(getApplicationContext(), NoLecturePopActivity.class);
+                    intent.putExtra("message", "<h2>ERROR</h2><br><p>The classes for the day have not started</p>");
+                    activityResultLauncher.launch(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "RECORDING" , Toast.LENGTH_SHORT).show();
+                    intent = new Intent(getApplicationContext(), CameraActivity.class);
+                    activityResultLauncher.launch(intent);
+                }
             }
         });
     }
@@ -126,7 +152,6 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         });
     }
 
-
     public String getFirstname(){
         return firstname;
     }
@@ -139,14 +164,39 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         return bilkentID;
     }
 
-    @Override
-    public void run() {
-        try {
-            String serverResponse = LoginActivity.dataInputStream.readUTF();
-            Log.i("SERVER RESPONSE", serverResponse);
-            requestExecution.executeCommand(serverResponse);
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+    private void alterDateTextView(){
+        currentTime = Calendar.getInstance().getTime();
+        String[] splitDateData = currentTime.toString().split(" ");
+        String buildDateDisplay = "";
+        for(int i = 0; i <= 3; i++){
+            buildDateDisplay += splitDateData[i] + " ";
         }
+        data_time_textview.setText(buildDateDisplay);
+    }
+
+    private boolean[] validateLectureRecordingTime(){
+        Log.i("DEBUG", "VALIDATING DATE AND TIME");
+        boolean[] allChecks = new boolean[]{false, false, false};
+                                        //can record, time not between 0830-1730, weekends
+        //first check for weekends
+        if(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+            allChecks[2] = true;
+            return allChecks;
+        }
+        //need to check for hours between 0830-1730
+        //check for hours first
+        //Calender.hour returns hour as a 24-hour format
+        if(Calendar.getInstance().get(Calendar.HOUR) < 8 || Calendar.getInstance().get(Calendar.HOUR) > 17){
+            allChecks[1] = true;
+            return  allChecks;
+        }else if(Calendar.getInstance().get(Calendar.HOUR) == 8 && Calendar.getInstance().get(Calendar.MINUTE)  < 30){
+            allChecks[1] = true;
+            return allChecks;
+        }else if(Calendar.getInstance().get(Calendar.HOUR) == 17 && Calendar.getInstance().get(Calendar.MINUTE)  > 30){
+            allChecks[1] = true;
+            return  allChecks;
+        }
+        allChecks[0] = true;
+        return  allChecks;
     }
 }

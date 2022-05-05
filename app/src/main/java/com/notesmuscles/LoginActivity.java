@@ -33,8 +33,7 @@ public class LoginActivity extends AppCompatActivity {
                     new ActivityResultCallback<ActivityResult>() {
                         @Override
                         public void onActivityResult(ActivityResult activityResult) {
-                            int result = activityResult.getResultCode();
-                            Intent data = activityResult.getData();
+
                             Toast.makeText(LoginActivity.this, "LOGGED OUT", Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -2,17 +2,24 @@ package com.notesmuscles.TimeTable;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.R;
+import com.notesmuscles.UserMenuActivity;
 
 public class TimeTableViewActivity extends AppCompatActivity {
 
-    private TextView[] lectureNodes = new TextView[20];
+    private TextView[] lectureNodes ;
     String bilkentID; //package access only
     private GetTimeTable timeTableRetriever;
+    private Button returnButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -22,11 +29,24 @@ public class TimeTableViewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         bilkentID = intent.getStringExtra("bilkentID");
-        timeTableRetriever = new GetTimeTable(this);
         setLectureNodes();
+        if(UserMenuActivity.timetable == null){
+            Toast.makeText(getApplicationContext(), "GET TIMETABLE", Toast.LENGTH_SHORT).show();
+            timeTableRetriever = new GetTimeTable(this);
+        }else{
+            setTimeTableText(UserMenuActivity.timetable.split(NetWorkProtocol.dataDelimiter));
+        }
+        returnButton = (Button) findViewById(R.id.returnToUserMenuButton);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void setLectureNodes(){
+        lectureNodes = new TextView[20];
         //setting the monday nodes
         lectureNodes[0] = (TextView) findViewById(R.id.Mon_Lec1);
         lectureNodes[1] = (TextView) findViewById(R.id.Mon_Lec2);
@@ -54,7 +74,8 @@ public class TimeTableViewActivity extends AppCompatActivity {
         lectureNodes[19] = (TextView) findViewById(R.id.Fri_Lec4);
     }
 
-    public void setTimeTableText(String[] lectures) {
+    public synchronized void setTimeTableText(String[] lectures) {
+        //Log.i("TIMETABLE", "HERE");
         for(int i = 0; i < lectureNodes.length; i++){
             if(lectures[i].equalsIgnoreCase("NONE")){
                 lectureNodes[i].setText("");
