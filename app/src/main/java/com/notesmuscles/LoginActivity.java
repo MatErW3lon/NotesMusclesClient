@@ -74,10 +74,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void launchUserMenu(){
+    public void launchUserMenu(String[] data){
         setButtonToUnclicked();
         Intent intent = new Intent(getApplicationContext(), UserMenuActivity.class);
         intent.putExtra("username" ,getUserName());
+        intent.putExtra("lastname", data[3]);
+        intent.putExtra("firstname", data[2]);
+        intent.putExtra("bilkentID", data[1]);
         activityResultLauncher.launch(intent);
     }
 
@@ -113,11 +116,11 @@ class LoginToServer{
                     LoginActivity.dataOutputStream.flush();
                     //wait for server response
                     String serverResponse = LoginActivity.dataInputStream.readUTF();
-
+                    String[] data = serverResponse.split(NetWorkProtocol.dataDelimiter);
                     //FOR DEBUG PURPOSES ONLY
                     Log.i("SERVER RESPONSE: ", serverResponse);
-                    if(serverResponse.equals(NetWorkProtocol.SuccessFull_LOGIN)){
-                        _loginActivity.launchUserMenu();
+                    if(data[0].equals(NetWorkProtocol.SuccessFull_LOGIN)){
+                        _loginActivity.launchUserMenu(data);
                     }else{
                         _loginActivity.setButtonToUnclicked();
                         _loginActivity.runOnUiThread(new Runnable() {

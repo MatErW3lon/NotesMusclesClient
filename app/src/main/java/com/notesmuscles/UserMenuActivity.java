@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
+import com.notesmuscles.ProfileActivity.ProfileViewActivity;
 import com.notesmuscles.RecordLecture.CameraActivity;
 import com.notesmuscles.RequestExecution.LogOutExecution;
 
@@ -24,9 +25,10 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
 
     private String username;
     private TextView welcomeUserTextView;
-    private Button logoutButton, recordButton;
+    private Button logoutButton, recordButton, profileButton;
     private LogOutExecution requestExecution;
     private Thread readServerResponseThread;
+    private String firstname, lastname, bilkentID;
 
     ActivityResultLauncher<Intent> activityResultLauncher =
             registerForActivityResult(
@@ -51,12 +53,17 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
         //display username
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
+        firstname = intent.getStringExtra("firstname");
+        lastname = intent.getStringExtra("lastname");
+        bilkentID = intent.getStringExtra("bilkentID");
+
         welcomeUserTextView.setText("WELCOME, " + username);
         setLogoutButton();
         requestExecution = new LogOutExecution(this);
         readServerResponseThread = new Thread(this);
         readServerResponseThread.start();
         setRecordButton();
+        setProfileButton();
     }
 
     private void setLogoutButton(){
@@ -89,6 +96,32 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
                 activityResultLauncher.launch(intent);
             }
         });
+    }
+
+    private void setProfileButton(){
+        profileButton = (Button) findViewById(R.id.Profilebutton);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ProfileViewActivity.class);
+                intent.putExtra("firstname", firstname);
+                intent.putExtra("lastname", lastname);
+                intent.putExtra("bilkentID", bilkentID);
+                activityResultLauncher.launch(intent);
+            }
+        });
+    }
+
+    public String getFirstname(){
+        return firstname;
+    }
+
+    public String getLastname(){
+        return lastname;
+    }
+
+    public String getBilkentID(){
+        return bilkentID;
     }
 
     @Override

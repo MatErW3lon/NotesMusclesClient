@@ -8,7 +8,7 @@ package com.notesmuscles.NetworkProtocol;
 
 public interface NetWorkProtocol {
 
-    String serverIP = "139.179.197.178";
+    String serverIP = "192.168.197.190";
     int serverPort = 4444;
 
     String LOGIN_FAILED = "ERROR";
