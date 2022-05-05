@@ -120,6 +120,7 @@ public class UserMenuActivity extends AppCompatActivity implements Runnable {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TimeTableViewActivity.class);
+                intent.putExtra("bilkentID", bilkentID);
                 activityResultLauncher.launch(intent);
             }
         });

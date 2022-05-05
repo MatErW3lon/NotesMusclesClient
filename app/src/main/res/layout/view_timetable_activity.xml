@@ -43,28 +43,29 @@
         app:layout_constraintVertical_bias="0.046" />
 
     <RelativeLayout
-        android:layout_width="390dp"
-        android:layout_height="572dp"
+        android:layout_width="377dp"
+        android:layout_height="467dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846">
+        app:layout_constraintVertical_bias="0.75">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
+            android:layout_margin="0dp"
             android:background="@color/white">
 
             <TableRow android:background="#6a0dad">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="250px"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
                     android:text="DAY"
@@ -72,9 +73,10 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="250px"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
                     android:text="0830-1030"
@@ -82,9 +84,10 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="250px"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
                     android:text="1030-1230"
@@ -92,9 +95,10 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="250px"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
                     android:text="1330-1530"
@@ -102,9 +106,10 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="250px"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
                     android:gravity="center_horizontal"
                     android:padding="10sp"
                     android:text="1530-1730"
@@ -113,11 +118,355 @@
 
             </TableRow>
 
+            <!--MONDAY LECTURES-->
+            <TableRow android:background="#666a0dad">
 
+                <TextView
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="Monday"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Mon_Lec1"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Mon_Lec2"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Mon_Lec3"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Mon_Lec4"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+            </TableRow>
+
+            <TableRow android:background="#666a0dad">
+
+                <TextView
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="Tuesday"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Tue_Lec1"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Tue_Lec2"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Tue_Lec3"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Tue_Lec4"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+            </TableRow>
+
+            <TableRow android:background="#666a0dad">
+
+                <TextView
+                    android:id="@+id/Wed_Lec1"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="Wednesday"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Wed_Lec2"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Wed_Lec3"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Wed_Lec4"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+            </TableRow>
+
+            <TableRow android:background="#666a0dad">
+
+                <TextView
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="Thursday"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Thurs_Lec1"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Thurs_Lec2"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Thurs_Lec3"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Thurs_Lec4"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+            </TableRow>
+
+            <TableRow android:background="#666a0dad">
+
+                <TextView
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="Friday"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Fri_Lec1"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Fri_Lec2"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Fri_Lec3"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/Fri_Lec4"
+                    android:layout_width="250px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:padding="10sp"
+                    android:text="placeholder"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+            </TableRow>
         </TableLayout>
-
-
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/returnToUserMenuButton"
+        android:layout_width="99dp"
+        android:layout_height="36dp"
+        android:background="@drawable/roundedbutton"
+        android:fontFamily="@font/mistralorg"
+        android:gravity="center"
+        android:text="RETURN"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.905" />
+
+    <Button
+        android:id="@+id/EditTimetableButton"
+        android:layout_width="99dp"
+        android:layout_height="36dp"
+        android:background="@drawable/roundedbutton"
+        android:fontFamily="@font/mistralorg"
+        android:gravity="center"
+        android:text="EDIT"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.905" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

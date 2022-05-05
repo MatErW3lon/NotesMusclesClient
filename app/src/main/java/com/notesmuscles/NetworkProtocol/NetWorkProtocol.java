@@ -34,5 +34,8 @@ public interface NetWorkProtocol {
     String Cancel_Acc_Request = "CANCEL_NEW_ACC";
     String Acc_Info_Ready = "READY_TO_CREATE";
     //after sending the request the account info will be sent as a byte
+
+    //retrieve timetable
+    String RETRIEVE_TIMETABLE_REQUEST = "TIMETABLE";
 }
 
