@@ -59,6 +59,8 @@
 
         <activity android:name=".TimeTable.TimeTableViewActivity"/>
 
+        <activity android:name=".Notes.Notes_Courses_Activity"/>
+
     </application>
 
 </manifest>

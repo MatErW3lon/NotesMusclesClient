@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
+import com.notesmuscles.Notes.Notes_Courses_Activity;
 import com.notesmuscles.ProfileActivity.ProfileViewActivity;
 import com.notesmuscles.RecordLecture.CameraActivity;
 import com.notesmuscles.RecordLecture.NoLecturePopActivity;
@@ -30,7 +31,7 @@ public class UserMenuActivity extends AppCompatActivity{
 
     private String username;
     private TextView welcomeUserTextView, data_time_textview;
-    private Button logoutButton, recordButton, profileButton, timetableButton;
+    private Button logoutButton, recordButton, profileButton, timetableButton, notesButton;
     private String firstname, lastname, bilkentID;
     public static String timetable;
     private Date currentTime;
@@ -76,6 +77,7 @@ public class UserMenuActivity extends AppCompatActivity{
         setRecordButton();
         setProfileButton();
         setTimetableButton();
+        setNotesButton();
         handler = new Handler();
         alterDateRunnable.run();
     }
@@ -97,6 +99,18 @@ public class UserMenuActivity extends AppCompatActivity{
                         }
                     }
                 }).start();
+            }
+        });
+    }
+
+    private void setNotesButton(){
+        notesButton = (Button) findViewById(R.id.Notesbutton);
+        notesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Notes_Courses_Activity.class);
+                intent.putExtra("bilkentID", getBilkentID());
+                activityResultLauncher.launch(intent);
             }
         });
     }
@@ -132,9 +146,9 @@ public class UserMenuActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ProfileViewActivity.class);
-                intent.putExtra("firstname", firstname);
-                intent.putExtra("lastname", lastname);
-                intent.putExtra("bilkentID", bilkentID);
+                intent.putExtra("firstname", getFirstname());
+                intent.putExtra("lastname", getLastname());
+                intent.putExtra("bilkentID", getBilkentID());
                 activityResultLauncher.launch(intent);
             }
         });

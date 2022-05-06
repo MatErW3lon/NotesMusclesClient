@@ -37,5 +37,7 @@ public interface NetWorkProtocol {
 
     //retrieve timetable
     String RETRIEVE_TIMETABLE_REQUEST = "TIMETABLE";
+
+    String RETRIEVE_NOTES_REQUEST = "NOTES";
 }
 
