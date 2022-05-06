@@ -31,7 +31,8 @@
         </activity>
         <activity android:name=".LoginActivity"></activity>
 
-        <activity android:name=".UserMenuActivity"></activity>
+        <activity android:name=".UserMenuActivity"
+            android:launchMode="singleTask"></activity>
 
         <activity android:name=".RecordLecture.CameraActivity"></activity>
 
@@ -57,9 +58,18 @@
 
         <activity android:name=".ProfileActivity.ProfileViewActivity"/>
 
+        <activity android:name=".Notes.Notes_Courses_Activity"
+            android:noHistory="true"/>
+
+        <activity android:name=".Notes.Select_Text_Activity"
+            android:noHistory="true"/>
+
+        <activity android:name=".Notes.Text_View_Activity"
+            android:noHistory="true"/>
+
         <activity android:name=".TimeTable.TimeTableViewActivity"/>
 
-        <activity android:name=".Notes.Notes_Courses_Activity"/>
+
 
     </application>
 

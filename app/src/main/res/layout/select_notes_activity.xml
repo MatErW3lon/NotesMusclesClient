@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".Notes.Notes_Courses_Activity">
+    tools:context=".Notes.Select_Text_Activity">
 
     <TextView
         android:id="@+id/titleBar"
@@ -30,7 +30,7 @@
         android:layout_height="48dp"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
-        android:text="Notes"
+        android:text="Select Notes"
         android:textColor="#000000"
         android:textSize="80px"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,21 +41,33 @@
         app:layout_constraintVertical_bias="0.103" />
 
 
-    <LinearLayout
-        android:id="@+id/courseButtonsLinearLayout"
-        android:layout_width="343dp"
-        android:layout_height="429dp"
-        android:orientation="vertical"
+    <ScrollView
+        android:layout_width="399dp"
+        android:layout_height="531dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.437">
+        app:layout_constraintVertical_bias="0.59">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/notesButtonsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.437">
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
     <Button
-        android:id="@+id/returnToUserMenuButton"
+        android:id="@+id/returnToNotesMenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/roundedbutton"
@@ -66,6 +78,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922" />
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

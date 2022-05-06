@@ -39,5 +39,6 @@ public interface NetWorkProtocol {
     String RETRIEVE_TIMETABLE_REQUEST = "TIMETABLE";
 
     String RETRIEVE_NOTES_REQUEST = "NOTES";
+    String CANCEL_NOTES = "CANCEL_NOTES";
 }
 
