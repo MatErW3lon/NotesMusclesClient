@@ -5,6 +5,8 @@ import android.util.DisplayMetrics;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+//a template class for creating pop ups
 public class PopActivity extends AppCompatActivity {
 
 

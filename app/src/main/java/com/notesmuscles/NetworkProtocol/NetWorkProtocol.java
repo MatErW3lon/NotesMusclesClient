@@ -40,5 +40,8 @@ public interface NetWorkProtocol {
 
     String RETRIEVE_NOTES_REQUEST = "NOTES";
     String CANCEL_NOTES = "CANCEL_NOTES";
+
+    //Account deletion
+    String DELETE_ACCOUNT_REQUEST = "DELETE_ACC";
 }
 

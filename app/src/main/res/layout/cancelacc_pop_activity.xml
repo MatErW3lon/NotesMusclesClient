@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#776a0dad"
     tools:context=".CreateAccountActivity.CancelPopActivity">
-s
+
     <TextView
         android:id="@+id/CreateAccPopText"
         android:layout_width="wrap_content"
@@ -16,13 +16,12 @@ s
         android:gravity="center"
         android:text="placeholder"
         android:textColor="#000000"
-        android:textSize="100px"
+        android:textSize="50px"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.163" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/cancel_button"
@@ -32,11 +31,11 @@ s
         android:fontFamily="@font/mistral"
         android:text="CANCEL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.708"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922" />
+        app:layout_constraintVertical_bias="0.992" />
 
     <Button
         android:id="@+id/confirm_button"
@@ -46,11 +45,11 @@ s
         android:fontFamily="@font/mistral"
         android:text="CONFIRM"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.269"
+        app:layout_constraintHorizontal_bias="0.018"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922" />
+        app:layout_constraintVertical_bias="0.992" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

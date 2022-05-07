@@ -24,17 +24,34 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/LoginBar"
+        android:layout_width="411dp"
+        android:layout_height="48dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="LOGIN"
+        android:textColor="#000000"
+        android:textSize="100px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.215" />
+
     <EditText
         android:id="@+id/UsernameEditText"
         android:layout_width="264dp"
         android:layout_height="59dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="248dp"
+        android:background="@drawable/textview_border"
         android:ems="10"
-        android:hint="USERNAME"
-        android:textColorHint="#66000000"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
+        android:hint="USERNAME"
         android:textColor="#66000000"
+        android:textColorHint="#66000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,13 +61,14 @@
         android:id="@+id/PasswordEditText"
         android:layout_width="264dp"
         android:layout_height="59dp"
-        android:layout_marginTop="192dp"
+        android:layout_marginTop="336dp"
+        android:background="@drawable/textview_border"
         android:ems="10"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
         android:hint="PASSWORD"
-        android:textColorHint="#66000000"
         android:textColor="#66000000"
+        android:textColorHint="#66000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +87,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.391" />
+        app:layout_constraintVertical_bias="0.624" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

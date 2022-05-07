@@ -81,8 +81,8 @@ public class TimeTableViewActivity extends AppCompatActivity {
                 lectureNodes[i].setText("");
             }else{
                 lectureNodes[i].setText(lectures[i]);
-                lectureNodes[i].setTextColor(getResources().getColor(R.color.white));
-                lectureNodes[i].setBackgroundColor(getResources().getColor(R.color.purple_500));
+                //lectureNodes[i].setTextColor(getResources().getColor(R.color.white));
+                //lectureNodes[i].setBackgroundColor(getResources().getColor(R.color.purple_500)));
             }
         }
     }

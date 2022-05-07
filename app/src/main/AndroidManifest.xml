@@ -58,6 +58,9 @@
 
         <activity android:name=".ProfileActivity.ProfileViewActivity"/>
 
+        <activity android:name=".ProfileActivity.DeleteConfirmPopActivity"
+            android:theme="@style/AppTheme.CustomTheme"/>
+
         <activity android:name=".Notes.Notes_Courses_Activity"
             android:noHistory="true"/>
 
@@ -68,8 +71,6 @@
             android:noHistory="true"/>
 
         <activity android:name=".TimeTable.TimeTableViewActivity"/>
-
-
 
     </application>
 

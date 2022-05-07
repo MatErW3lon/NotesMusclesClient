@@ -59,7 +59,7 @@
             android:layout_margin="0dp"
             android:background="@color/white">
 
-            <TableRow android:background="#6a0dad">
+            <TableRow android:background="@drawable/timetable_border_columns">
 
                 <TextView
                     android:layout_width="250px"
@@ -183,7 +183,7 @@
 
             </TableRow>
 
-            <TableRow android:background="#666a0dad">
+            <TableRow android:background="@drawable/timetable_border_days">
 
                 <TextView
                     android:background="#446a0dad"
@@ -311,7 +311,7 @@
 
             </TableRow>
 
-            <TableRow android:background="#666a0dad">
+            <TableRow android:background="@drawable/timetable_border_days">
 
                 <TextView
                     android:background="#446a0dad"

@@ -1,4 +1,4 @@
-package com.notesmuscles.CreateAccountActivity;
+package com.notesmuscles.ProfileActivity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -8,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -17,13 +16,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.notesmuscles.CreateAccountActivity.RegisterUserInfoActivity;
 import com.notesmuscles.R;
 import com.notesmuscles.WelcomeActivity;
 
-public class CancelPopActivity extends AppCompatActivity {
+public class DeleteConfirmPopActivity extends AppCompatActivity {
 
     private TextView warningMessage;
     private Button confirmButton, cancelButton;
+    private Delete_Acc_Thread delete_acc_thread;
 
     ActivityResultLauncher<Intent> activityResultLauncher =
             registerForActivityResult(
@@ -34,9 +35,8 @@ public class CancelPopActivity extends AppCompatActivity {
                     }
             );
 
-
     private final String warning = "<h2>WARNING</h2><br>" +
-            "<p>if you return, all data entered will be lost. Confirm?</p>";
+            "<p>This action can not be undone. Do you wish to continue?</p>";
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -62,7 +62,8 @@ public class CancelPopActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RegisterUserInfoActivity.serverConnection.CancelAccountCreation();
+                delete_acc_thread = new Delete_Acc_Thread();
+                delete_acc_thread.start();
                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 activityResultLauncher.launch(intent);
             }
