@@ -6,6 +6,7 @@ import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class PhotoSend{
 
@@ -20,20 +21,32 @@ public class PhotoSend{
 
     public void send(){
         int imageDataLength = this.imageData.length;
-        try {
-            os.writeUTF(NetWorkProtocol.Image_Send + NetWorkProtocol.dataDelimiter + imageDataLength);
-            os.flush();
-            Thread.sleep(500);
-            os.write(imageData, 0, imageDataLength);
-            os.flush();
-            //}
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-            closeEveryThing( os, is);
-        } catch(InterruptedException interruptedException){
-            interruptedException.printStackTrace();
-            closeEveryThing( os, is);
+        String[] splitDateData = Calendar.getInstance().getTime().toString().split(" ");
+        String buildDate = "";
+        for(int i = 0; i < splitDateData.length; i++){
+            buildDate += splitDateData[i] + " ";
         }
+        String finalBuildDate = buildDate;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //here we write the date as well
+                    os.writeUTF(NetWorkProtocol.Image_Send + NetWorkProtocol.dataDelimiter + imageDataLength + NetWorkProtocol.dataDelimiter + finalBuildDate);
+                    os.flush();
+                    Thread.sleep(500);
+                    os.write(imageData, 0, imageDataLength);
+                    os.flush();
+                    //}
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                    closeEveryThing( os, is);
+                } catch(InterruptedException interruptedException){
+                    interruptedException.printStackTrace();
+                    closeEveryThing( os, is);
+                }
+            }
+        }).start();
     }
 
     public void setByteArray(byte[] bytes){
