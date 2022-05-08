@@ -50,7 +50,6 @@ public class UserMenuActivity extends AppCompatActivity{
                     new ActivityResultCallback<ActivityResult>() {
                         @Override
                         public void onActivityResult(ActivityResult activityResult) {
-
                             Toast.makeText(getApplicationContext(), "MENU", Toast.LENGTH_SHORT).show();
                         }
                     }

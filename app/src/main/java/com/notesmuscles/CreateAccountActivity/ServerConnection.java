@@ -53,7 +53,7 @@ class ServerConnection extends Thread{
         try{
             String accountInfoBuilder = buildAccountInfo();
             byte[] accountInfoBytes = accountInfoBuilder.getBytes(StandardCharsets.UTF_8);
-            dataOutputStream.writeUTF(NetWorkProtocol.Acc_Info_Ready + NetWorkProtocol.dataDelimiter + accountInfoBytes.length); //account info ready and byte array length
+            dataOutputStream.writeUTF(NetWorkProtocol.Acc_Info_Ready + NetWorkProtocol.DATA_DELIMITER + accountInfoBytes.length); //account info ready and byte array length
             dataOutputStream.flush();
             String serverResponse = dataInputStream.readUTF();
             dataOutputStream.write(accountInfoBytes, 0, accountInfoBytes.length);
@@ -68,11 +68,11 @@ class ServerConnection extends Thread{
      */
 
     private String buildAccountInfo() {
-        String returnString = AccountInfoBuffer.FirstName + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.LastName + NetWorkProtocol.dataDelimiter
-                + AccountInfoBuffer.BilkentID + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.Monday.getStringRep() + NetWorkProtocol.dataDelimiter +
-                AccountInfoBuffer.Tuesday.getStringRep() + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.Wednesday.getStringRep() + NetWorkProtocol.dataDelimiter +
-                AccountInfoBuffer.Thursday.getStringRep() + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.Friday.getStringRep() + NetWorkProtocol.dataDelimiter +
-                AccountInfoBuffer.username + NetWorkProtocol.dataDelimiter + AccountInfoBuffer.password;
+        String returnString = AccountInfoBuffer.FirstName + NetWorkProtocol.DATA_DELIMITER + AccountInfoBuffer.LastName + NetWorkProtocol.DATA_DELIMITER
+                + AccountInfoBuffer.BilkentID + NetWorkProtocol.DATA_DELIMITER + AccountInfoBuffer.Monday.getStringRep() + NetWorkProtocol.DATA_DELIMITER +
+                AccountInfoBuffer.Tuesday.getStringRep() + NetWorkProtocol.DATA_DELIMITER + AccountInfoBuffer.Wednesday.getStringRep() + NetWorkProtocol.DATA_DELIMITER +
+                AccountInfoBuffer.Thursday.getStringRep() + NetWorkProtocol.DATA_DELIMITER + AccountInfoBuffer.Friday.getStringRep() + NetWorkProtocol.DATA_DELIMITER +
+                AccountInfoBuffer.username + NetWorkProtocol.DATA_DELIMITER + AccountInfoBuffer.password;
         return returnString;
 
     }

@@ -19,9 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import com.notesmuscles.NetworkProtocol.*;
 
@@ -110,12 +108,12 @@ class LoginToServer{
 
                     //for successful connection debug only
                     //Log.i("MESSAGE", connectionConfirmation);
-                    String loginString = NetWorkProtocol.User_LogIn + NetWorkProtocol.dataDelimiter + username + NetWorkProtocol.dataDelimiter + password;
+                    String loginString = NetWorkProtocol.User_LogIn + NetWorkProtocol.DATA_DELIMITER + username + NetWorkProtocol.DATA_DELIMITER + password;
                     LoginActivity.dataOutputStream.writeUTF( loginString);
                     LoginActivity.dataOutputStream.flush();
                     //wait for server response
                     String serverResponse = LoginActivity.dataInputStream.readUTF();
-                    String[] data = serverResponse.split(NetWorkProtocol.dataDelimiter);
+                    String[] data = serverResponse.split(NetWorkProtocol.DATA_DELIMITER);
                     //FOR DEBUG PURPOSES ONLY
                     Log.i("SERVER RESPONSE: ", serverResponse);
                     if(data[0].equals(NetWorkProtocol.SuccessFull_LOGIN)){

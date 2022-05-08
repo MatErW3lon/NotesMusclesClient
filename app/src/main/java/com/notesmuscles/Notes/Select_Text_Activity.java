@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -54,7 +53,7 @@ public class Select_Text_Activity extends AppCompatActivity {
     }
 
     private void setButtonsLayout() {
-        String[] textFileData_split = textFileData.split(NetWorkProtocol.dataDelimiter);
+        String[] textFileData_split = textFileData.split(NetWorkProtocol.DATA_DELIMITER);
         int textFilesCount = Integer.parseInt(textFileData_split[0]);
         LinearLayout linear = (LinearLayout) findViewById(R.id.notesButtonsLinearLayout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

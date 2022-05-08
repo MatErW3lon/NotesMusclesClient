@@ -1,7 +1,5 @@
 package com.notesmuscles.TimeTable;
 
-import android.util.Log;
-
 import com.notesmuscles.LoginActivity;
 import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.UserMenuActivity;
@@ -25,7 +23,7 @@ class GetTimeTable extends Thread{
     public void run(){
         //this is where we retrieve the data
         try {
-            LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.RETRIEVE_TIMETABLE_REQUEST + NetWorkProtocol.dataDelimiter + myTimeTableAct.bilkentID);
+            LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.RETRIEVE_TIMETABLE_REQUEST + NetWorkProtocol.DATA_DELIMITER + myTimeTableAct.bilkentID);
             LoginActivity.dataOutputStream.flush();
             //Log.i("DEBUG", "HERE");
             int byteLength = LoginActivity.dataInputStream.readInt();
@@ -37,11 +35,13 @@ class GetTimeTable extends Thread{
             String timetableStr = new String(timetableBytes, StandardCharsets.UTF_8);
             //Log.i("DEBUG", timetableStr);
             UserMenuActivity.timetable = timetableStr;
-            lectures = timetableStr.split(NetWorkProtocol.dataDelimiter);
+            lectures = timetableStr.split(NetWorkProtocol.DATA_DELIMITER);
             myTimeTableAct.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     myTimeTableAct.setTimeTableText(lectures);
+                    myTimeTableAct.setOnClickListeners();
                 }
             });
         } catch (IOException ioException) {

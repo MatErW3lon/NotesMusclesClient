@@ -21,11 +21,11 @@ class Server_Connection_Thread extends Thread{
             @Override
             public void run() {
                 try {
-                    LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.RETRIEVE_NOTES_REQUEST + NetWorkProtocol.dataDelimiter + Notes_Courses_Activity.bilkentID);
+                    LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.RETRIEVE_NOTES_REQUEST + NetWorkProtocol.DATA_DELIMITER + Notes_Courses_Activity.bilkentID);
                     LoginActivity.dataOutputStream.flush();
                     //wait for the number of courses
                     String message_temp = LoginActivity.dataInputStream.readUTF();
-                    message = message_temp.split(NetWorkProtocol.dataDelimiter);
+                    message = message_temp.split(NetWorkProtocol.DATA_DELIMITER);
                     courses_count[0] = Integer.parseInt(message[0]);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -81,6 +81,20 @@ class Server_Connection_Thread extends Thread{
         tempThread.start();
         while(tempThread.isAlive()){}
         return data[0];
+    }
+
+    public void sendEditRequest(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.EDIT_REQUEST);
+                    LoginActivity.dataOutputStream.flush();
+                }catch(IOException ioException){
+                    ioException.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override

@@ -42,6 +42,24 @@
         app:layout_constraintTop_toBottomOf="@+id/titleBar"
         app:layout_constraintVertical_bias="0.046" />
 
+
+    <TextView
+        android:id="@+id/TimetableEditSelectView"
+        android:layout_width="420dp"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="Click to edit"
+        android:textColor="#000000"
+        android:textSize="50px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleBar"
+        app:layout_constraintVertical_bias="0.132" />
+
     <RelativeLayout
         android:layout_width="377dp"
         android:layout_height="467dp"
@@ -133,7 +151,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Mon_Lec1"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -145,7 +164,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Mon_Lec2"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -157,7 +177,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Mon_Lec3"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -169,7 +190,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Mon_Lec4"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -197,7 +219,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Tue_Lec1"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -209,7 +232,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Tue_Lec2"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -221,7 +245,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Tue_Lec3"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -233,7 +258,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Tue_Lec4"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -261,7 +287,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Wed_Lec1"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -273,7 +300,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Wed_Lec2"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -285,7 +313,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Wed_Lec3"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -297,7 +326,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Wed_Lec4"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -325,7 +355,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Thurs_Lec1"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -337,7 +368,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Thurs_Lec2"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -349,7 +381,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Thurs_Lec3"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -361,7 +394,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Thurs_Lec4"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -389,7 +423,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Fri_Lec1"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -401,7 +436,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Fri_Lec2"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -413,7 +449,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Fri_Lec3"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -425,7 +462,8 @@
                     android:textColor="@color/white"
                     android:textSize="10sp" />
 
-                <TextView
+                <Button
+                    android:background="#996a0dad"
                     android:id="@+id/Fri_Lec4"
                     android:layout_width="250px"
                     android:layout_height="match_parent"
@@ -451,27 +489,10 @@
         android:text="RETURN"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.905" />
-
-    <Button
-        android:id="@+id/EditTimetableButton"
-        android:layout_width="99dp"
-        android:layout_height="36dp"
-        android:background="@drawable/roundedbutton"
-        android:fontFamily="@font/mistralorg"
-        android:gravity="center"
-        android:text="EDIT"
-        android:textColor="#ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.897"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.905" />
+        app:layout_constraintVertical_bias="0.976" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

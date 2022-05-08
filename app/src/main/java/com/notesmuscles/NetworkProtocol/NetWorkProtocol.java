@@ -8,12 +8,12 @@ package com.notesmuscles.NetworkProtocol;
 
 public interface NetWorkProtocol {
 
-    String serverIP = "139.179.197.178";
+    String serverIP = "139.179.197.131";
     int serverPort = 4444;
 
     String LOGIN_FAILED = "ERROR";
 
-    String dataDelimiter = "/";
+    String DATA_DELIMITER = "/";
 
     String User_LogOut = "LOGOUT";
     String Invalid_LogOut = null;
@@ -37,11 +37,15 @@ public interface NetWorkProtocol {
 
     //retrieve timetable
     String RETRIEVE_TIMETABLE_REQUEST = "TIMETABLE";
+    String EDIT_TIMETABLE_REQUEST = "EDIT_TIMETABLE";
 
     String RETRIEVE_NOTES_REQUEST = "NOTES";
     String CANCEL_NOTES = "CANCEL_NOTES";
+    String EDIT_REQUEST = "EDIT_NOTES";
 
     //Account deletion
     String DELETE_ACCOUNT_REQUEST = "DELETE_ACC";
+
+
 }
 

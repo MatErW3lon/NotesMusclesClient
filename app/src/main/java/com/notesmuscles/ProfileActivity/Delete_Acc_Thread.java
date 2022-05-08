@@ -20,7 +20,7 @@ class Delete_Acc_Thread extends Thread{
     @Override
     public void run(){
         try {
-            dataOutputStream.writeUTF(NetWorkProtocol.DELETE_ACCOUNT_REQUEST + NetWorkProtocol.dataDelimiter);
+            dataOutputStream.writeUTF(NetWorkProtocol.DELETE_ACCOUNT_REQUEST + NetWorkProtocol.DATA_DELIMITER);
             dataOutputStream.flush();
         } catch (IOException ioException) {
             ioException.printStackTrace();

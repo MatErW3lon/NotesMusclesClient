@@ -17,8 +17,8 @@ class AccountInfoBuffer {
         static String lecture3;
         static String lecture4;
         static String getStringRep(){
-            return dayID + NetWorkProtocol.dataDelimiter + lecture1 + NetWorkProtocol.dataDelimiter + lecture2 + NetWorkProtocol.dataDelimiter
-                    + lecture3 + NetWorkProtocol.dataDelimiter + lecture4;
+            return dayID + NetWorkProtocol.DATA_DELIMITER + lecture1 + NetWorkProtocol.DATA_DELIMITER + lecture2 + NetWorkProtocol.DATA_DELIMITER
+                    + lecture3 + NetWorkProtocol.DATA_DELIMITER + lecture4;
         }
     }
     static class Tuesday{
@@ -28,8 +28,8 @@ class AccountInfoBuffer {
         static String lecture3;
         static String lecture4;
         static String getStringRep(){
-            return dayID + NetWorkProtocol.dataDelimiter + lecture1 + NetWorkProtocol.dataDelimiter + lecture2 + NetWorkProtocol.dataDelimiter
-                    + lecture3 + NetWorkProtocol.dataDelimiter + lecture4;
+            return dayID + NetWorkProtocol.DATA_DELIMITER + lecture1 + NetWorkProtocol.DATA_DELIMITER + lecture2 + NetWorkProtocol.DATA_DELIMITER
+                    + lecture3 + NetWorkProtocol.DATA_DELIMITER + lecture4;
         }
     }
     static class Wednesday{
@@ -39,8 +39,8 @@ class AccountInfoBuffer {
         static String lecture3;
         static String lecture4;
         static String getStringRep(){
-            return dayID + NetWorkProtocol.dataDelimiter + lecture1 + NetWorkProtocol.dataDelimiter + lecture2 + NetWorkProtocol.dataDelimiter
-                    + lecture3 + NetWorkProtocol.dataDelimiter + lecture4;
+            return dayID + NetWorkProtocol.DATA_DELIMITER + lecture1 + NetWorkProtocol.DATA_DELIMITER + lecture2 + NetWorkProtocol.DATA_DELIMITER
+                    + lecture3 + NetWorkProtocol.DATA_DELIMITER + lecture4;
         }
     }
     static class Thursday{
@@ -50,8 +50,8 @@ class AccountInfoBuffer {
         static String lecture3;
         static String lecture4;
         static String getStringRep(){
-            return dayID + NetWorkProtocol.dataDelimiter + lecture1 + NetWorkProtocol.dataDelimiter + lecture2 + NetWorkProtocol.dataDelimiter
-                    + lecture3 + NetWorkProtocol.dataDelimiter + lecture4;
+            return dayID + NetWorkProtocol.DATA_DELIMITER + lecture1 + NetWorkProtocol.DATA_DELIMITER + lecture2 + NetWorkProtocol.DATA_DELIMITER
+                    + lecture3 + NetWorkProtocol.DATA_DELIMITER + lecture4;
         }
     }
     static class Friday{
@@ -61,8 +61,8 @@ class AccountInfoBuffer {
         static String lecture3;
         static String lecture4;
         static String getStringRep(){
-            return dayID + NetWorkProtocol.dataDelimiter + lecture1 + NetWorkProtocol.dataDelimiter + lecture2 + NetWorkProtocol.dataDelimiter
-                    + lecture3 + NetWorkProtocol.dataDelimiter + lecture4;
+            return dayID + NetWorkProtocol.DATA_DELIMITER + lecture1 + NetWorkProtocol.DATA_DELIMITER + lecture2 + NetWorkProtocol.DATA_DELIMITER
+                    + lecture3 + NetWorkProtocol.DATA_DELIMITER + lecture4;
         }
     }
 

@@ -32,7 +32,7 @@ public class PhotoSend{
             public void run() {
                 try {
                     //here we write the date as well
-                    os.writeUTF(NetWorkProtocol.Image_Send + NetWorkProtocol.dataDelimiter + imageDataLength + NetWorkProtocol.dataDelimiter + finalBuildDate);
+                    os.writeUTF(NetWorkProtocol.Image_Send + NetWorkProtocol.DATA_DELIMITER + imageDataLength + NetWorkProtocol.DATA_DELIMITER + finalBuildDate);
                     os.flush();
                     Thread.sleep(500);
                     os.write(imageData, 0, imageDataLength);
