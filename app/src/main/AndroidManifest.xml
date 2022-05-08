@@ -84,6 +84,9 @@
 
         <activity android:name=".TimeTable.TimeTableViewActivity"/>
 
+        <activity android:name=".GlobalChat.GlobalChatActivity"
+            android:windowSoftInputMode="adjustPan"/>
+
     </application>
 
 </manifest>

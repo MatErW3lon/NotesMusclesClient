@@ -16,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.notesmuscles.GlobalChat.GlobalChatActivity;
 import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.Notes.Notes_Courses_Activity;
 import com.notesmuscles.ProfileActivity.ProfileViewActivity;
@@ -31,7 +32,7 @@ public class UserMenuActivity extends AppCompatActivity{
 
     private String username;
     private TextView welcomeUserTextView, data_time_textview;
-    private Button logoutButton, recordButton, profileButton, timetableButton, notesButton;
+    private Button logoutButton, recordButton, profileButton, timetableButton, notesButton, globalChatBtn;
     private String firstname, lastname, bilkentID;
     public static String timetable;
     private Date currentTime;
@@ -77,8 +78,20 @@ public class UserMenuActivity extends AppCompatActivity{
         setProfileButton();
         setTimetableButton();
         setNotesButton();
+        setGlobalChatButton();
         handler = new Handler();
         alterDateRunnable.run();
+    }
+
+    private void setGlobalChatButton() {
+        globalChatBtn = (Button) findViewById(R.id.GlobalChatbutton);
+        globalChatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), GlobalChatActivity.class);
+                activityResultLauncher.launch(intent);
+            }
+        });
     }
 
     private void setLogoutButton(){
