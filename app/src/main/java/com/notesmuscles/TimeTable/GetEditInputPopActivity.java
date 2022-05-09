@@ -80,7 +80,7 @@ public class GetEditInputPopActivity extends AppCompatActivity {
             }
         });
 
-        inputEdit = (EditText) findViewById(R.id.LectureEditText);
+        inputEdit = (EditText) findViewById(R.id.InputEditText);
 
         confirmBtn = (Button) findViewById(R.id.confirm_button);
         confirmBtn.setOnClickListener(new View.OnClickListener() {

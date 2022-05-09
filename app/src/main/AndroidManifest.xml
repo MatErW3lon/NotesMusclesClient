@@ -82,6 +82,11 @@
             android:windowSoftInputMode="adjustPan"
             android:noHistory="true"/>
 
+        <activity android:name=".Notes.Share_Notes_Popup_Activity"
+            android:theme="@style/AppTheme.CustomTheme"
+            android:windowSoftInputMode="adjustPan"
+            android:noHistory="true"/>
+
         <activity android:name=".TimeTable.TimeTableViewActivity"/>
 
         <activity android:name=".GlobalChat.GlobalChatActivity"

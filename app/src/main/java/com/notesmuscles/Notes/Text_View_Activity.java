@@ -13,12 +13,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.notesmuscles.LoginActivity;
+import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.R;
 import com.notesmuscles.UserMenuActivity;
 
+import java.io.IOException;
+
 public class Text_View_Activity extends AppCompatActivity {
 
-    private Button returnButton, editButton;
+    private Button returnButton, editButton, shareBtn;
     private String textFileName;
     private TextView notesText;
 
@@ -61,6 +65,27 @@ public class Text_View_Activity extends AppCompatActivity {
                 Notes_Courses_Activity.server_connection_thread.sendEditRequest();
                 Intent intent = new Intent(getApplicationContext(), Edit_Text_Activity.class);
                 intent.putExtra("text", notesData);
+                activityResultLauncher.launch(intent);
+            }
+        });
+
+        shareBtn = (Button) findViewById(R.id.ShareNotesButton);
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.SHARE_NOTES);
+                            LoginActivity.dataOutputStream.flush();
+
+                        }catch(IOException ioException){
+                            ioException.printStackTrace();
+                        }
+                    }
+                }).start();
+                Intent intent = new Intent(getApplicationContext(), Share_Notes_Popup_Activity.class);
                 activityResultLauncher.launch(intent);
             }
         });

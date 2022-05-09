@@ -8,7 +8,7 @@ package com.notesmuscles.NetworkProtocol;
 
 public interface NetWorkProtocol {
 
-    String serverIP = "139.179.197.131";
+    String serverIP = "192.168.156.190";
     int serverPort = 4444;
 
     String LOGIN_FAILED = "ERROR";
@@ -42,6 +42,10 @@ public interface NetWorkProtocol {
     String RETRIEVE_NOTES_REQUEST = "NOTES";
     String CANCEL_NOTES = "CANCEL_NOTES";
     String EDIT_REQUEST = "EDIT_NOTES";
+    String SHARE_NOTES = "SHARE_NOTES";
+    String SHARE_NOTES_ERROR_STATUS_NOUSER = "SN_NO_USER";
+    String SHARE_NOTES_ERROR_STATUS_NOLECTURE = "SN_NO_LECTURE";
+    String SHARE_NOTES_CONFIRMATION = "NOTES_SHARED";
 
     //Account deletion
     String DELETE_ACCOUNT_REQUEST = "DELETE_ACC";

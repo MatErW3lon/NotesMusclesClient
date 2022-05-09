@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/LectureEditText"
+        android:id="@+id/InputEditText"
         android:layout_width="264dp"
         android:layout_height="59dp"
         android:layout_marginTop="272dp"
