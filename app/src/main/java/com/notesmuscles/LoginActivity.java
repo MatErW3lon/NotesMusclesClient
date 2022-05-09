@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static DataInputStream dataInputStream;
     public static DataOutputStream dataOutputStream;
+    public static String username;
 
     private EditText usernameText, passwordText;
     private Button loginButton;
@@ -117,6 +118,7 @@ class LoginToServer{
                     //FOR DEBUG PURPOSES ONLY
                     Log.i("SERVER RESPONSE: ", serverResponse);
                     if(data[0].equals(NetWorkProtocol.SuccessFull_LOGIN)){
+                        LoginActivity.username = username;
                         _loginActivity.launchUserMenu(data);
                     }else{
                         _loginActivity.setButtonToUnclicked();

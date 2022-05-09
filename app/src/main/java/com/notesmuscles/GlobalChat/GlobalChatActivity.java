@@ -1,6 +1,7 @@
 package com.notesmuscles.GlobalChat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 import com.notesmuscles.R;
 
 public class GlobalChatActivity extends AppCompatActivity {
@@ -35,7 +37,7 @@ public class GlobalChatActivity extends AppCompatActivity {
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                server_pull_chat.setEndReceivingThread();
+                server_pull_chat.sendMessage(NetWorkProtocol.END_GLOBAL_CHAT);
                 finish();
             }
         });
@@ -46,13 +48,12 @@ public class GlobalChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String getMessage = messages_to_send.getText().toString();
                 server_pull_chat.sendMessage(getMessage);
-                //Toast.makeText(getApplicationContext(), "TO BE IMPLEMENTED", Toast.LENGTH_SHORT).show();
+                messages_to_send.setText("");
             }
         });
-
     }
 
     public void setTextView(String messages) {
-        messages_view.setText(messages);
+        messages_view.append(messages);
     }
 }

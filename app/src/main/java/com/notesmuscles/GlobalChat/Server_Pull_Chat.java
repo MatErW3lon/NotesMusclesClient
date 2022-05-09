@@ -1,5 +1,7 @@
 package com.notesmuscles.GlobalChat;
 
+import android.util.Log;
+
 import com.notesmuscles.LoginActivity;
 import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
 
@@ -9,7 +11,6 @@ import java.io.IOException;
 
 class Server_Pull_Chat extends Thread{
 
-    private volatile boolean end_receiving_thread;
     private DataOutputStream dataOutputStream;
     private DataInputStream dataInputStream;
     private String messages;
@@ -26,21 +27,23 @@ class Server_Pull_Chat extends Thread{
         dataOutputStream = LoginActivity.dataOutputStream;
         messages = null;
         this.myGlobalChatActivity = myGlobalChatActivity;
-        end_receiving_thread = false;
     }
 
     @Override
     public void run(){
         try{
-            while(!end_receiving_thread) {
-                dataOutputStream.writeUTF(NetWorkProtocol.PULL_GLOBAL_CHAT + NetWorkProtocol.DATA_DELIMITER);
-                dataOutputStream.flush();
-                //now we read the messages
-                messages = dataInputStream.readUTF();
-                myGlobalChatActivity.runOnUiThread(message_editor);
-            }
-            dataOutputStream.writeUTF(NetWorkProtocol.END_GLOBAL_CHAT);
+            dataOutputStream.writeUTF(NetWorkProtocol.PULL_GLOBAL_CHAT + NetWorkProtocol.DATA_DELIMITER);
             dataOutputStream.flush();
+            Log.i("DEBUG", "READING THREAD STARTED");
+            messages = dataInputStream.readUTF();
+            Log.i("DEBUG", "MESSAGE ->" + messages);
+            while(!messages.equalsIgnoreCase(NetWorkProtocol.END_GLOBAL_CHAT)) {
+                //now we read the messages
+                myGlobalChatActivity.runOnUiThread(message_editor);
+                messages = dataInputStream.readUTF();
+                Log.i("DEBUG", "MESSAGE" + messages);
+            }
+            Log.i("DEBUG", "READING THREAD DEAD");
         }catch(IOException ioException){
             ioException.printStackTrace();
         }
@@ -58,10 +61,6 @@ class Server_Pull_Chat extends Thread{
                 }
             }
         }).start();
-    }
-
-    public void setEndReceivingThread(){
-        this.end_receiving_thread = true;
     }
 
 }
