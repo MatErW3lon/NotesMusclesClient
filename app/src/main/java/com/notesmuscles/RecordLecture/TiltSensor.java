@@ -101,6 +101,4 @@ public class TiltSensor implements Runnable{
         magnetic_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         orientation_x = orientationAngles[0] * 10;
     }
-
-
 }

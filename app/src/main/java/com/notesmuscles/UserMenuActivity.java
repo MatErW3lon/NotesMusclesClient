@@ -135,7 +135,7 @@ public class UserMenuActivity extends AppCompatActivity{
                 boolean[] dateAndTimeCheck = validateLectureRecordingTime();
                 Log.i("DEBUG", "CHECKED DATE AND TIME VALIDATION");
                 Intent intent;
-                /*if(dateAndTimeCheck[2]){
+                if(dateAndTimeCheck[2]){
                     intent = new Intent(getApplicationContext(), NoLecturePopActivity.class);
                     intent.putExtra("message", "It is a weekend today. Are you sure you have a lecture today?");
                     activityResultLauncher.launch(intent);
@@ -143,11 +143,11 @@ public class UserMenuActivity extends AppCompatActivity{
                     intent = new Intent(getApplicationContext(), NoLecturePopActivity.class);
                     intent.putExtra("message", "<h2>ERROR</h2><br><p>The classes for the day have not started</p>");
                     activityResultLauncher.launch(intent);
-                //}else{*/
+                }else{
                     Toast.makeText(getApplicationContext(), "RECORDING" , Toast.LENGTH_SHORT).show();
                     intent = new Intent(getApplicationContext(), CameraActivity.class);
                     activityResultLauncher.launch(intent);
-                //}
+                }
             }
         });
     }
