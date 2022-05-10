@@ -25,6 +25,8 @@ import com.notesmuscles.R;
 import com.notesmuscles.UserMenuActivity;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Share_Notes_Popup_Activity extends AppCompatActivity {
 
@@ -70,39 +72,41 @@ public class Share_Notes_Popup_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 final Intent[] intent = new Intent[1];
                 String bilkentIDReceiver = receiverBilkentIDEditText.getText().toString();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try{
-                            LoginActivity.dataOutputStream.writeUTF(bilkentIDReceiver);
-                            LoginActivity.dataOutputStream.flush();
+                if(validateBilkentID(bilkentIDReceiver)){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try{
+                                LoginActivity.dataOutputStream.writeUTF(bilkentIDReceiver);
+                                LoginActivity.dataOutputStream.flush();
 
-                            //wait for response
-                            String response = LoginActivity.dataInputStream.readUTF();
-                            if(response.equals(NetWorkProtocol.SHARE_NOTES_CONFIRMATION)){
-                                intent[0] = new Intent(getApplicationContext(), UserMenuActivity.class);
-                                activityResultLauncher.launch(intent[0]);
-                            }else if(response.equals(NetWorkProtocol.SHARE_NOTES_ERROR_STATUS_NOUSER)){
-                                //launch relevant error message
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getApplicationContext(), bilkentIDReceiver + " NOT REGISTERED", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }else if(response.equals(NetWorkProtocol.SHARE_NOTES_ERROR_STATUS_NOLECTURE)){
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getApplicationContext(), bilkentIDReceiver + " DOES NOT TAKE THE LECTURE", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                //wait for response
+                                String response = LoginActivity.dataInputStream.readUTF();
+                                if(response.equals(NetWorkProtocol.SHARE_NOTES_CONFIRMATION)){
+                                    intent[0] = new Intent(getApplicationContext(), UserMenuActivity.class);
+                                    activityResultLauncher.launch(intent[0]);
+                                }else if(response.equals(NetWorkProtocol.SHARE_NOTES_ERROR_STATUS_NOUSER)){
+                                    //launch relevant error message
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), bilkentIDReceiver + " NOT REGISTERED", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }else if(response.equals(NetWorkProtocol.SHARE_NOTES_ERROR_STATUS_NOLECTURE)){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), bilkentIDReceiver + " DOES NOT TAKE THE LECTURE", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }catch(IOException ioException){
+                                ioException.printStackTrace();
                             }
-                        }catch(IOException ioException){
-                            ioException.printStackTrace();
                         }
-                    }
-                }).start();
+                    }).start();
+                }
             }
         });
 
@@ -126,5 +130,34 @@ public class Share_Notes_Popup_Activity extends AppCompatActivity {
                 activityResultLauncher.launch(intent);
             }
         });
+    }
+
+    private boolean validateBilkentID(String bilkentID){
+        Pattern pattern = Pattern.compile("[0-9]");
+        if(bilkentID.length() != 8){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "BILKENT ID LENGTH INVALID", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return false;
+        }
+
+        //check each digit
+        for(int i = 0 ; i < bilkentID.length(); i++){
+            Matcher matcher = pattern.matcher(bilkentID.charAt(i) + "");
+            if(!matcher.find()){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "BILKENT ID MUST BE ALL DIGITS", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return false;
+            }
+        }
+        //all data validated
+        return true;
     }
 }

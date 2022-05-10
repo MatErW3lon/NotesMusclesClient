@@ -8,15 +8,14 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 
-public class TiltSensor implements Runnable{
+public class TiltSensor{
 
     private SensorManager sensorManager;
     private Sensor acce_sensor, magnetic_sensor;
 
     private float orientation_x;
-    private boolean isCalibrated;
-    private boolean tiltValid;
 
     private final float[] accelerometerReading = new float[3];
     private final float[] magnetometerReading = new float[3];
@@ -50,14 +49,21 @@ public class TiltSensor implements Runnable{
 
     public TiltSensor(CameraActivity myCameraActivity){
         this.myCameraActivity = myCameraActivity;
+        sensorManager = (SensorManager)  myCameraActivity.getSystemService(Context.SENSOR_SERVICE);
+        acce_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetic_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+
         sensorManager.registerListener(sensor_listener, acce_sensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(sensor_listener, magnetic_sensor, SensorManager.SENSOR_DELAY_NORMAL);
-        isCalibrated = true;
         sensorManager = (SensorManager)  myCameraActivity.getSystemService(Context.SENSOR_SERVICE);
         acce_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetic_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
     }
 
+    public void setOrientation_x(){
+        this.orientation_x = orientationAngles[0] * 10;
+    }
     //call these methods when in cameraActivity onResume/onPause
     protected void onResume(){
         sensorManager.registerListener(sensor_listener, acce_sensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -68,37 +74,22 @@ public class TiltSensor implements Runnable{
         sensorManager.unregisterListener(sensor_listener);
     }
 
-    private void recordingStartedCallback(){
-        SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerReading, magnetometerReading);
-        SensorManager.getOrientation(rotationMatrix, orientationAngles);
-        orientation_x = orientationAngles[0] * 10;
-
-    }
-
     private void updateOrientationAngles(){
         SensorManager.getRotationMatrix(rotationMatrix, null, accelerometerReading, magnetometerReading);
         SensorManager.getOrientation(rotationMatrix, orientationAngles);
     }
 
-    private boolean updateStatus(){
-        tiltValid = false;
-        if(!isCalibrated){
-            return tiltValid;
-        }
+    private void updateStatus(){
+        //Log.i("DEBUG", "UPDATING STATUS");
+
         if(!((xValue > 7 && xValue < 11) && (yValue > -1 && yValue < 2) && (zValue > -1 && zValue < 1) && (orientationAngles[0]* 10 > (orientation_x - 2) && orientationAngles[0] * 10 < (orientation_x + 2)))){
-            tiltValid = false;
+            //Log.i("DEBUG", "ORIENTATION NOT VALID");
+            myCameraActivity.correct_camera_orientation = false;
         }else{
-            tiltValid = true;
+            //Log.i("DEBUG", "ORIENTATION VALID");
+            myCameraActivity.correct_camera_orientation = true;
         }
-        return tiltValid;
     }
 
-    @Override
-    public void run(){
-        isCalibrated = true;
-        sensorManager = (SensorManager)  myCameraActivity.getSystemService(Context.SENSOR_SERVICE);
-        acce_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        magnetic_sensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        orientation_x = orientationAngles[0] * 10;
-    }
+
 }

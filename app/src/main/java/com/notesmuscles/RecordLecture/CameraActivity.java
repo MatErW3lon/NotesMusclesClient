@@ -23,13 +23,16 @@ import android.media.ImageReader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.notesmuscles.LoginActivity;
 import com.notesmuscles.NetworkProtocol.NetWorkProtocol;
@@ -43,12 +46,16 @@ import java.util.List;
 
 public class CameraActivity extends AppCompatActivity{
 
+    volatile boolean correct_camera_orientation;
+
     private final int Photo_Delay = 20000;
     private boolean recordingStarted;
     private Button captureButton, returnButton;
+    private ToggleButton orientation_toggle_btn;
     private PhotoSend photoSend;
     private TiltSensor myTiltSensor;
     private TextureView cameraView;
+
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static{
         ORIENTATIONS.append(Surface.ROTATION_0, 0);
@@ -69,11 +76,18 @@ public class CameraActivity extends AppCompatActivity{
     private HandlerThread backgroundHandlerThread;
 
     private Handler delay_handler;
-
     private final Runnable senderRunnable = new Runnable() {
         @Override
         public void run() {
             repeatPhotoCaptureOnDelay();
+        }
+    };
+
+    private Handler orientation_checker;
+    private Runnable orientation_runnable = new Runnable() {
+        @Override
+        public void run() {
+            repeatOrientationChecker();
         }
     };
 
@@ -83,6 +97,7 @@ public class CameraActivity extends AppCompatActivity{
             recordingStarted = false;
             captureButton.setText("RE START");
             delay_handler.removeCallbacks(senderRunnable);
+            orientation_checker.removeCallbacks(orientation_runnable);
             Thread stopperThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -103,6 +118,7 @@ public class CameraActivity extends AppCompatActivity{
     private View.OnClickListener captureStartListener = new View.OnClickListener(){
         @Override
         public void onClick(View view) {
+            myTiltSensor.setOrientation_x();
             recordingStarted = true;
             Toast.makeText(getApplicationContext(), "STARTED RECORDING", Toast.LENGTH_SHORT).show();
             captureButton.setText("STOP");
@@ -129,7 +145,8 @@ public class CameraActivity extends AppCompatActivity{
         getSupportActionBar().hide();
         setContentView(R.layout.camera_activity);
 
-        //myTiltSensor = new TiltSensor(this);
+        myTiltSensor = new TiltSensor(this);
+        correct_camera_orientation = false;
         recordingStarted = false;
         returnButton = (Button) findViewById(R.id.returnButton);
         returnButton.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +157,17 @@ public class CameraActivity extends AppCompatActivity{
                 }else{
                     Toast.makeText(getApplicationContext(), "STOP RECORDING BEFORE EXIT", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        //orientation stuff comes here
+        orientation_checker = new Handler();
+        orientation_checker.postDelayed(orientation_runnable, 2500);
+        orientation_toggle_btn = (ToggleButton) findViewById(R.id.toggle_orientation);
+        orientation_toggle_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(getApplicationContext(), "TOGGLE BUTTON ON", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -206,13 +234,23 @@ public class CameraActivity extends AppCompatActivity{
     };
 
     private void repeatPhotoCaptureOnDelay(){
-        try {
-            photoSend.send();
-            takePicture();
-            delay_handler.postDelayed(senderRunnable, Photo_Delay);
-        } catch (CameraAccessException cameraAccessException) {
-            cameraAccessException.printStackTrace();
+        if(correct_camera_orientation){
+            try {
+                //photoSend.send();
+                takePicture();
+            } catch (CameraAccessException cameraAccessException) {
+                cameraAccessException.printStackTrace();
+            }
         }
+        delay_handler.postDelayed(senderRunnable, Photo_Delay);
+    }
+
+    private void repeatOrientationChecker(){
+        if(!correct_camera_orientation) {
+            Log.i("DEBUG", "HERE IN NOT VALID DISPLAY");
+            //Toast.makeText(getApplicationContext(), "FIX YOUR CAMERA ORIENTATION", Toast.LENGTH_SHORT).show();
+        }
+        orientation_checker.postDelayed(orientation_runnable, 2500);
     }
 
     private void createCameraPreview() throws CameraAccessException {
@@ -348,6 +386,7 @@ public class CameraActivity extends AppCompatActivity{
 
     protected void onResume(){
         super.onResume();
+        myTiltSensor.onResume();
         startBackgroundThread();
         if(cameraView.isAvailable()){
             try{
@@ -368,6 +407,7 @@ public class CameraActivity extends AppCompatActivity{
     }
 
     protected void onPause(){
+        myTiltSensor.onPause();
         try {
             stopBackgroundThread();
         } catch (InterruptedException e) {

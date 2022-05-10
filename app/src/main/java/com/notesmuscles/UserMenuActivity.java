@@ -133,7 +133,7 @@ public class UserMenuActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 boolean[] dateAndTimeCheck = validateLectureRecordingTime();
-                Log.i("DEBUG", "CHECKED DATE AND TIME VALIDATION");
+                //Log.i("DEBUG", "CHECKED DATE AND TIME VALIDATION");
                 Intent intent;
                 if(dateAndTimeCheck[2]){
                     intent = new Intent(getApplicationContext(), NoLecturePopActivity.class);
@@ -144,9 +144,40 @@ public class UserMenuActivity extends AppCompatActivity{
                     intent.putExtra("message", "<h2>ERROR</h2><br><p>The classes for the day have not started</p>");
                     activityResultLauncher.launch(intent);
                 }else{
-                    Toast.makeText(getApplicationContext(), "RECORDING" , Toast.LENGTH_SHORT).show();
-                    intent = new Intent(getApplicationContext(), CameraActivity.class);
-                    activityResultLauncher.launch(intent);
+                    //now we need to check for the lecture possibility during that time
+                    String[] splitDateData = Calendar.getInstance().getTime().toString().split(" ");
+                    String buildDate = "";
+                    for(int i = 0; i < splitDateData.length; i++){
+                        buildDate += splitDateData[i] + " ";
+                    }
+                    String finalBuildDate = buildDate;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try{
+
+                                LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.GET_LECTURE_POSSIBILITY + NetWorkProtocol.DATA_DELIMITER + finalBuildDate);
+                                LoginActivity.dataOutputStream.flush();
+
+                                //response
+                                String response = LoginActivity.dataInputStream.readUTF();
+                                if(response.equals(NetWorkProtocol.LECTURE_POSSIBLE)){
+                                    Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                                    activityResultLauncher.launch(intent);
+                                }else{
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "YOU DO NOT HAVE A LECTURE RIGHT NOW", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            }catch(IOException ioException){
+                                ioException.printStackTrace();
+                            }
+                        }
+                    }).start();
+
                 }
             }
         });
@@ -201,7 +232,6 @@ public class UserMenuActivity extends AppCompatActivity{
     }
 
     private boolean[] validateLectureRecordingTime(){
-        Log.i("DEBUG", "VALIDATING DATE AND TIME");
         boolean[] allChecks = new boolean[]{false, false, false};
                                         //can record, time not between 0830-1730, weekends
         //first check for weekends
@@ -212,13 +242,14 @@ public class UserMenuActivity extends AppCompatActivity{
         //need to check for hours between 0830-1730
         //check for hours first
         //Calender.hour returns hour as a 24-hour format
-        if(Calendar.getInstance().get(Calendar.HOUR) < 8 || Calendar.getInstance().get(Calendar.HOUR) > 17){
+        //Log.i("DEBUG", "HOUR OF THE DAY " + Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+        if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < 8 || Calendar.getInstance().get(Calendar.HOUR_OF_DAY) > 17){
             allChecks[1] = true;
             return  allChecks;
-        }else if(Calendar.getInstance().get(Calendar.HOUR) == 8 && Calendar.getInstance().get(Calendar.MINUTE)  < 30){
+        }else if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == 8 && Calendar.getInstance().get(Calendar.MINUTE)  < 30){
             allChecks[1] = true;
             return allChecks;
-        }else if(Calendar.getInstance().get(Calendar.HOUR) == 17 && Calendar.getInstance().get(Calendar.MINUTE)  > 30){
+        }else if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) == 17 && Calendar.getInstance().get(Calendar.MINUTE)  > 30){
             allChecks[1] = true;
             return  allChecks;
         }

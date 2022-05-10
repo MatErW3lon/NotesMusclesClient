@@ -23,6 +23,10 @@ public interface NetWorkProtocol {
 
     String SuccessFull_LOGIN = "SUCCESS";
 
+    //lecture commands
+    String GET_LECTURE_POSSIBILITY = "LECTURE_POSSIBILITY";
+    String LECTURE_NOT_POSSIBLE = "NO";
+    String LECTURE_POSSIBLE = "YES";
     String Image_Send = "IMAGE";
     Integer Image_Received_Confirmation = 1;
     String Image_Stop = "STOP_IMAGE";
