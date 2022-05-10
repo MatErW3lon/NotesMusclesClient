@@ -155,22 +155,19 @@ public class UserMenuActivity extends AppCompatActivity{
                         @Override
                         public void run() {
                             try{
-
+                                Intent innerIntent;
                                 LoginActivity.dataOutputStream.writeUTF(NetWorkProtocol.GET_LECTURE_POSSIBILITY + NetWorkProtocol.DATA_DELIMITER + finalBuildDate);
                                 LoginActivity.dataOutputStream.flush();
 
                                 //response
                                 String response = LoginActivity.dataInputStream.readUTF();
                                 if(response.equals(NetWorkProtocol.LECTURE_POSSIBLE)){
-                                    Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-                                    activityResultLauncher.launch(intent);
+                                    innerIntent = new Intent(getApplicationContext(), CameraActivity.class);
+                                    activityResultLauncher.launch(innerIntent);
                                 }else{
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(getApplicationContext(), "YOU DO NOT HAVE A LECTURE RIGHT NOW", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                    innerIntent = new Intent(getApplicationContext(), NoLecturePopActivity.class);
+                                    innerIntent.putExtra("message", "<h2>ERROR</h2><br><p>You do not have a lecture at this time</p>");
+                                    activityResultLauncher.launch(innerIntent);
                                 }
                             }catch(IOException ioException){
                                 ioException.printStackTrace();

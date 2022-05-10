@@ -30,7 +30,6 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -79,7 +78,7 @@ public class CameraActivity extends AppCompatActivity{
     private final Runnable senderRunnable = new Runnable() {
         @Override
         public void run() {
-            repeatPhotoCaptureOnDelay();
+            repeatPhotoCaptureWithDelay();
         }
     };
 
@@ -132,7 +131,7 @@ public class CameraActivity extends AppCompatActivity{
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    repeatPhotoCaptureOnDelay();
+                    repeatPhotoCaptureWithDelay();
                 }
             }, Photo_Delay);
             captureButton.setOnClickListener(captureStopListener);
@@ -164,12 +163,6 @@ public class CameraActivity extends AppCompatActivity{
         orientation_checker = new Handler();
         orientation_checker.postDelayed(orientation_runnable, 2500);
         orientation_toggle_btn = (ToggleButton) findViewById(R.id.toggle_orientation);
-        orientation_toggle_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(getApplicationContext(), "TOGGLE BUTTON ON", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         cameraView = (TextureView)  findViewById(R.id.cameraTextureView);
         cameraView.setSurfaceTextureListener(textureListener);
@@ -233,10 +226,19 @@ public class CameraActivity extends AppCompatActivity{
         }
     };
 
-    private void repeatPhotoCaptureOnDelay(){
-        if(correct_camera_orientation){
+    private void repeatPhotoCaptureWithDelay(){
+        if(orientation_toggle_btn.getText().toString().equals("ORIENTATION ON")){
+            if(correct_camera_orientation){
+                try {
+                    photoSend.send();
+                    takePicture();
+                } catch (CameraAccessException cameraAccessException) {
+                    cameraAccessException.printStackTrace();
+                }
+            }
+        }else{ //continue without orientation check
             try {
-                //photoSend.send();
+                photoSend.send();
                 takePicture();
             } catch (CameraAccessException cameraAccessException) {
                 cameraAccessException.printStackTrace();
@@ -246,9 +248,11 @@ public class CameraActivity extends AppCompatActivity{
     }
 
     private void repeatOrientationChecker(){
-        if(!correct_camera_orientation) {
-            Log.i("DEBUG", "HERE IN NOT VALID DISPLAY");
-            //Toast.makeText(getApplicationContext(), "FIX YOUR CAMERA ORIENTATION", Toast.LENGTH_SHORT).show();
+        if(orientation_toggle_btn.getText().toString().equals("ORIENTATION ON")){
+            if(!correct_camera_orientation) {
+                Log.i("DEBUG", "HERE IN NOT VALID DISPLAY");
+                Toast.makeText(getApplicationContext(), "FIX YOUR CAMERA ORIENTATION", Toast.LENGTH_SHORT).show();
+            }
         }
         orientation_checker.postDelayed(orientation_runnable, 2500);
     }
